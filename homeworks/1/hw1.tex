@@ -1729,31 +1729,27 @@ Formally
 \item New set of states $Q' = Q \cup \{q_0'\}$, where $q_0$ is the new start state
 \item New set of final states $F' = \{q_0\}$ 
 i.e. we will accept only in the start state of the original DFA.
-\item New transition function $\delta'$ is definde as follows
-\begin{equation}
-  \delta(q,a) '=\begin{cases}
-    F, & \text{if } q = q_0' \text{ and } a = \epsilon \\
-    \delta^{-1}(q,a), & \text{if } q \neq q_0' \text{ and } a \neq \epsilon . \\
-    \emptyset, & \text{otherwise}.
-  \end{cases}
-\end{equation}
+\item New transition function $\delta'$ is definde as follows\\
+  $\delta(q,a) '= F, \text{if } q = q_0' \text{ and } a = \epsilon$ \\
+  $\delta(q,a) '= \delta^{-1}(q,a),  \text{if } q \neq q_0' \text{ and } a \neq \epsilon .$ \\
+  $\delta(q,a) ' =  \emptyset,  \text{otherwise}.$
 
 \end{itemize}
 $\delta$ $q_0, q_1, \cdots, q_n$ is in accepting computation of $M$ on input $w_1w_2\cdots w_n$ if
-and only if $\delta'$ $q_n,\cdots ,q_1, q_0 $ is an accepting computation of $N$ on input $w_n \cdots w_2 w_1$ (since
-$\delta(q_i,w_{i+1} = q_{i+i}$ iff $q_i \in \delta' (q_{i+1},w_{i+1})$ for $0 \leq i < n$ and 
-$q_n \in \delta'(q_0', \epsilon))$. Thus, $N$ recognizes $A^R$. Therefore for any regular language $A$ there exists an NFA that recognizes
+and only if $\delta'$ $q_n,\cdots ,q_1, q_0 $ is an accepting computation of $N$ on input $w_n \cdots w_2 w_1$ . 
+%(since $\delta(q_i,w_{i+1} = q_{i+i}$ iff $q_i \in \delta' (q_{i+1},w_{i+1})$ for $0 \leq i < n$ and 
+%$q_n \in \delta'(q_0', \epsilon))$. 
+Thus, $N$ recognizes $A^R$. Therefore for any regular language $A$ there exists an NFA that recognizes
 $A^R$.\\
 
 \vspace{1cm}
 \problem{1.32}
 
 Let $w^R$ denote the reverse of the string $w$. For any language A, let $A^R = \{w^R | w\in A\}$.
-Then if $A$ is regular, so is $A^R$.
+Then if $A$ is regular, so is $A^R$ (as in previous exercise).
 \\
-Now, the construction of the automata for the language $B^R$ is simple. We get columns of size 3
-as our alphabets at each stage, we will need to keep track of two things, wheter there is a carry or not. Depending on wheter there
-was a carry or not, we just need to verify that the provided 3-column is consistent. \\
+Construction for the automata for the language $A^R$ comes down to tracking of carry bit. If there is no carry bit, 
+then language is in accept state, if there is a carry bit, then in fail.
 $a = 
 \begin{bmatrix}
     0 \\
