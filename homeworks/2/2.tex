@@ -1,0 +1,261 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{wrapfig}
+\usepackage{extramarks}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}                                          
+                    \setlist[enumerate, 1]{1\textsuperscript{o}}
+
+
+
+\usepackage{listings}
+\usepackage{xcolor}
+%\lstset { %
+%    language=C++,
+%    backgroundcolor=\color{black!5}, % set backgroundcolor
+%    basicstyle=\footnotesize,% basic font setting
+%}
+\lstset{
+  basicstyle=\itshape,
+  xleftmargin=3em,
+  literate={->}{$\rightarrow$}{2}
+           {α}{$\alpha$}{1}
+           {δ}{$\delta$}{1}
+}
+
+%\usetikzlibrary{automata,positioning}
+\usetikzlibrary{positioning,shapes,shadows,arrows,automata}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkClass}
+\chead{ (\hmwkClassInstructor\ \hmwkClassTime) }
+\rhead{\shortName \hspace{0.4cm} \hmwkTitle}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Homework\ \#2}
+\newcommand{\hmwkDueDate}{February 1 2016}
+\newcommand{\hmwkClass}{CS581 Theory of Computation}
+\newcommand{\hmwkClassTime}{Winter 2016}
+\newcommand{\hmwkClassInstructor}{Harry H. Porter}
+\newcommand{\hmwkAuthorName}{Konstantin Macarenco}
+\newcommand{\shortName}{Konstantin M.}
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 2:00pm}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+    \vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+\newcommand{\answ}[1]{\hspace{1cm}\textbf{Answ:} #1}
+\newcommand{\problem}[1]{\large{\textbf{Problem #1} \\}}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\problem{2.6}
+Give context-free grammars generating the following languages. \\  \\
+\problem{2.6 b}
+The complement of the language $\{a^n b^n | n \geq 0\}$ \\ \\
+\problem{2.6 d}
+$\{x_1 \# x_2 \# \cdots \# x_k |  k \geq 1, \text{ each }x_i \in \{a,b\}^*,\text{ and for some } i \text{ and } j, x_i = {x_j}^R\}$ \\ \\
+\problem{2.7}
+Give informal English description of PDAs for the languages in Exercise 2.6 \\ \\
+\problem{2.7 b}
+The complement of the language $\{a^n b^n | n \geq 0\}$ \\ \\
+\problem{2.7 d}
+$\{x_1 \# x_2 \# \cdots \# x_k |  k \geq 1, \text{ each }x_i \in \{a,b\}^*,\text{ and for some } i \text{ and } j, x_i = {x_j}^R\}$ \\ \\
+
+\problem{2.9}
+Give a context-free grammar that generates the language
+\begin{center}
+$A = \{a^i b^j c^k | i = j \text{ or } j = k \text{ where } i,j,k \geq 0\}$
+\end{center}
+Is your grammar ambiguous? Why or why not? \\ \\
+
+\problem{2.13}
+Let $G = (V, \sum, R, S)$ be the following grammsr. $V = \{S<T U\}; \sum = \{0,\#\};$ and R is the set of rules:
+\begin{table}[h!]
+\centering
+\begin{tabular}{l}
+S $\rightarrow$ $TT$ $|$ $U$ \\
+T $\rightarrow$ $0T$ $|$ $T0$ $|$ $\#$   \\
+U $\rightarrow$  $0U00$ $|\#$
+\end{tabular}
+\end{table}
+\problem{2.13 a}
+Describe $L(G)$ in English. \\ \\
+\problem{2.13 b}
+Prove that $L(G)$ is not regular. \\ \\
+
+\problem{2.15}
+Give a counterexample to show that the following construction fails to prove that the class of context-free languages is closed under star.
+Let A be a CFL that is generated by th CFG $G = (V,\sum,R,S)$. Add the new rule $S \rightarrow SS$ and call the
+resulting grammar $G'$A. This grammar is supposed to generate $A*$. \\ \\
+
+\problem{2.19}
+Let  CFG G be the following grammar.
+\begin{table}[h!]
+\centering
+\begin{tabular}{l}
+$S \rightarrow a S b\: | \:b Y \:|\: Y a $\\
+$Y \rightarrow b Y \:| \:a Y \:| \:\epsilon$
+\end{tabular}
+\end{table}
+
+Give a simple description of L(G) in English. Use that description to give a CFG for $\overline{L(G)}$, the compliment of $L(G)$. \\
+
+\problem{2.28}
+
+Give unambiguous CFGs for the following languages.\\ \\
+\problem{2.28 a}
+$\{w| \text{ in every prefix of } w \text{ the number of a's is at least the number of b's }\}$ \\ \\
+\problem{2.28 b}
+$\{w| \text{ the number of a's and the number of b's in } w \text{ are equal }\}$ \\ \\
+\problem{2.28 c}
+$\{w| \text{ the number of a's is at least the number of b's in } w\}$ \\ \\
+
+
+\problem{2.30}
+Use the pumping lemma to show that the following languages are not context free. \\ \\
+\problem{2.30 a}
+$\{ 0^n 1^n 0^n 1^n | n \geq 0  \}$ \\ \\
+\problem{2.30 d}
+$\{ t_1 \# t_2 \# \cdots \# t_k | k \geq 2,\text{ each } t_i \in \{a,b\}^*,\text{ and }t_i = t_j\text{ for some } i \neq j  \}$ \\ \\
+\problem{2.31}
+Let B be the language of all palindromes over $\{0,1\}$ containing equal numbers of 0s and 1s. Show that B is not context free. \\ \\
+\problem{2.33}
+Show that $F = \{a^i, b^j | i = kj\text{ for some positive integer } k\}$ is not context free. \\ \\
+\problem{2.35}
+Let G be a CFG in Chomsky normal form that contains $b$ variables. Show that if G generates some string with a derivation having 
+at least $2^b$ steps, $L(G)$ is infinite. \\ \\
+\problem{2.46}
+Consider the following CFG G:
+\begin{table}[h!]
+\centering
+\begin{tabular}{l}
+$S \rightarrow SS \:| \:T$ \\
+$T \rightarrow aTb \:| \:ab$
+\end{tabular}
+\end{table}
+Describe $L(G)$ and show that G is ambiguous. Give an unambiguous grammar H where $L(H) = L(G)$ and
+sketch a proof that $H$ is unambiguous.
+
+
+%\begin{homeworkProblem}
+%\end{homeworkProblem}
+\end{document}
