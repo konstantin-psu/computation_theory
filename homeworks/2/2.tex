@@ -8,6 +8,7 @@
 \usepackage{amsthm}
 \usepackage{amsfonts}
 \usepackage{tikz}
+\usepackage{forest,adjustbox}
 \usepackage[plain]{algorithm}
 \usepackage{algpseudocode}
 \usepackage{enumerate}
@@ -334,13 +335,17 @@ $B \rightarrow a S \:| \:b BB $ \\
 \problem{2.30}
 Use the pumping lemma to show that the following languages are not context free. \\ \\
 \problem{2.30 a}
-$\{ 0^n 1^n 0^n 1^n | n \geq 0  \}$ \\ \\
+$\{ 0^n 1^n 0^n 1^n | n \geq 0  \}$ \\
+
+Let $p$ be the pumping lentgth, $s = 0^p 1^p 0^p 1^p$. By pumping lemma $s = uvxyz$, where $|vxy| \leq p$ and $|vy| > 1$.
+
+\vspace{0.2cm}
 \problem{2.30 d}
 $\{ t_1 \# t_2 \# \cdots \# t_k | k \geq 2,\text{ each } t_i \in \{a,b\}^*,\text{ and }t_i = t_j\text{ for some } i \neq j  \}$ \\ \\
 \problem{2.31}
 Let B be the language of all palindromes over $\{0,1\}$ containing equal numbers of 0s and 1s. Show that B is not context free. \\ \\
 \problem{2.33}
-Show that $F = \{a^i, b^j | i = kj\text{ for some positive integer } k\}$ is not context free. \\ \\
+Show that $F = \{a^i b^j\: |\: i = kj\text{ for some positive integer } k\}$ is not context free. \\ \\
 \problem{2.35}
 Let G be a CFG in Chomsky normal form that contains $b$ variables. Show that if G generates some string with a derivation having 
 at least $2^b$ steps, $L(G)$ is infinite. \\ \\
@@ -354,7 +359,68 @@ $T \rightarrow aTb \:| \:ab$
 \end{tabular}
 \end{table}
 Describe $L(G)$ and show that G is ambiguous. Give an unambiguous grammar H where $L(H) = L(G)$ and
-sketch a proof that $H$ is unambiguous.
+sketch a proof that $H$ is unambiguous. \\
+
+$L(G) = \curl{ (a^nb^n)^i | \text{ where } i,n > 0}$. $ababab \in L(G)$ and has two derivation trees
+
+\begin{adjustbox}{valign=t}
+\begin{forest}
+[S, tier=1
+    [S, tier=2
+        [S, tier=3
+            [T, tier=4
+                [ab, tier=5]
+            ]
+        ]
+        [S, tier=3
+            [T, tier=4
+                [ab, tier=5]
+            ]
+        ]
+    ]
+    [S, tier=2
+        [T, tier=3
+            [ab]
+        ]
+    ]
+]
+\end{forest}
+\end{adjustbox}\qquad
+\begin{adjustbox}{valign=t}
+\begin{forest}
+[S, tier=1
+    [S, tier=2
+        [T, tier=3
+            [ab]
+        ]
+    ]
+    [S, tier=2
+        [S, tier=3
+            [T, tier=4
+                [ab, tier=5]
+            ]
+        ]
+        [S, tier=3
+            [T, tier=4
+                [ab, tier=5]
+            ]
+        ]
+    ]
+]
+\end{forest}
+\end{adjustbox}
+
+Therefore $L(G)$ is ambiguous.
+
+Unambiguous grammar for this language is:
+\begin{table}[h!]
+\centering
+\begin{tabular}{l}
+$S \rightarrow TS \:| \:\epsilon$ \\
+$T \rightarrow aTb \:| \:ab$
+\end{tabular}
+\end{table}
+
 
 
 %\begin{homeworkProblem}
