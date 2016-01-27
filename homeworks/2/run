@@ -1,2 +1,2 @@
 #!/bin/bash
-pdflatex 2.tex
+pdflatex -interaction=nonstopmode 2.tex
