@@ -197,11 +197,30 @@ $E \rightarrow \#DE \:| \: \# $\\
 \problem{2.7}
 Give informal English description of PDAs for the languages in Exercise 2.6 \\ \\
 \problem{2.7 b}
-The complement of the language $\{a^n b^n | n \geq 0\}$ \\ \\
+The complement of the language $\{a^n b^n | n \geq 0\}$ \\
+
+The PDA would work as follows:\\
+\begin{enumerate}[1., leftmargin = 0.8cm]
+\itemsep0em
+\item Push start symbol on the stack.
+\item If the first symbol is a $b$ then move to accept state, since $a^n b^$ cannot start with $b$
+    therefore this string is in compliment.
+\item If the first symbol is $a$ then push $a$ on the stack, keep pushing a's for all consecutively 
+following a's. When see first b after stream of a's, start consuming a's from the stack.
+\item If stream is over and there is only start symbol - fail.
+\item If start symbol is consumed when b is scanned, then go to accept $b > a$.
+\item If followed by a, then go to accept, since string has a form of  $a^i b^j a \cdots$.
+\item Last option all bs are consumed, but there is stil a remains on the stack $\rightarrow$ accept state
+since $ a > b $
+\end{enumerate}
+
+
+\vspace{0.4cm}
 \problem{2.7 d}
 $\{x_1 \# x_2 \# \cdots \# x_k |  k \geq 1, \text{ each }x_i \in \{a,b\}^*,\text{ and for some } i \text{ and } j, x_i 
-= {x_j}^R\}$ \\ \\
+= {x_j}^R\}$ \\
 
+\vspace{0.4cm}
 \problem{2.9}
 Give a context-free grammar that generates the language
 \begin{center}
@@ -248,7 +267,7 @@ More formally it is $\{0^{i_1}_1\#0^{i_2}_2\#0^{i_3}_3\#0^{i_4}_4\#\cdots\#0^{i_
 \problem{2.13 b}
 Prove that $L(G)$ is not regular. \\
 
-\begin{enumerate}[1., leftmargin = 0.5cm]
+\begin{enumerate}[Case 1., leftmargin = 1.5cm]
 \itemsep0em
 \item Assume that $L(G)$ is regular.
 \item Consider the word $0^p\#0^{2p} \in L(G)$. By pumping lemma there eixsts a word $xyz \in L(G)$, and puping
@@ -335,17 +354,65 @@ $B \rightarrow a S \:| \:b BB $ \\
 \problem{2.30}
 Use the pumping lemma to show that the following languages are not context free. \\ \\
 \problem{2.30 a}
-$\{ 0^n 1^n 0^n 1^n | n \geq 0  \}$ \\
+$L = \{ 0^n 1^n 0^n 1^n | n \geq 0  \}$ \\
 
-Let $p$ be the pumping lentgth, $s = 0^p 1^p 0^p 1^p$. By pumping lemma $s = uvxyz$, where $|vxy| \leq p$ and $|vy| > 1$.
+Let $p$ be the pumping lentgth, $s = 0^p 1^p 0^p 1^p$. By pumping lemma 
+there exists $s = uv^ixy^iz \in L$, where $|vxy| \leq p$ and $|vy| > 1$. There are two 
+possible cases for $v$ and $y$.
+\begin{enumerate}[Case 1., leftmargin = 1.5cm]
+\itemsep0em
+\item $v$ and $y$ contain at most one type of symbols, then when
+we pump $i = p$ we will get string with member of unequal length:
+ $s = 0^p 1^{2p} 0^p 1^p \notin L$ or $s = 0^{2p} 1^p 0^p 1^p \notin L$ or $s = 0^{2p} 1^p 0^{2p} 1^p \notin L$ or 
+$s = 0^{2p} 1^p 0^{2p} 1^{2p} \notin L$
+\item $v$ and $y$ contain different types of symbols, then when $i$ is pumped the resulting 
+string will have members out of order, for example $0001110001010111 \notin L$. Therefore $L$ is not Context free.
+\end{enumerate}
 
 \vspace{0.2cm}
 \problem{2.30 d}
-$\{ t_1 \# t_2 \# \cdots \# t_k | k \geq 2,\text{ each } t_i \in \{a,b\}^*,\text{ and }t_i = t_j\text{ for some } i \neq j  \}$ \\ \\
+$L = \{ t_1 \# t_2 \# \cdots \# t_k | k \geq 2,\text{ each } t_i \in \{a,b\}^*,\text{ and }t_i = t_j\text{ for some } i \neq j  \}$  \\
+
+Let $p$ be the pumping lentgth, $s = a^p b ^p \# a^p b^p \in L$. By pumping lemma 
+there exists $s = uv^ixy^iz \in L$, where $|vxy| \leq p$ and $|vy| > 1$. There are three
+cases
+\begin{enumerate}[Case 1., leftmargin = 1.5cm]
+\itemsep0em
+\item $v$ or $y$ contain $\#$. Then for $i = 0$, $s = uxz$ and it doesn't contain $\# \notin L$
+\item $v$ and $y$ on the left side of $\#$. Then when we pump $i$ left side becomes longer than the right side $\notin L$
+\item $v$ and $y$ on the right side of $\#$. Then when we pump $i$ right side becomes longer than the left side $\notin L$
+\end{enumerate}
+
+Therefore $L$ is no Context free.
+
+\vspace{0.4cm}
 \problem{2.31}
-Let B be the language of all palindromes over $\{0,1\}$ containing equal numbers of 0s and 1s. Show that B is not context free. \\ \\
+Let L be the language of all palindromes over $\{0,1\}$ containing equal numbers of 0s and 1s. Show that B is not context free. \\
+
+Let $p$ be the pumping lentgth, $s = 0^p 1^2p 0^p \in L$. By pumping lemma 
+there exists $s = uv^ixy^iz \in L$, where $|vxy| \leq p$ and $|vy| > 1$. To prove
+that $L$ is not context free we need to consider following cases
+\begin{enumerate}[Case 1., leftmargin = 1.5cm]
+\itemsep0em
+\item $vxy$ consits of only 1's. Then if we pump $i = p$, then $s = 0^p 1^4p 0^p \notin L$, since
+number of 1's is greater than number of 0's.
+\item $vxy$ consits of only 0's. Then if we pump $i = p$, then $s = 0^2p 1^2p 0^p \notin L$, since
+number of 0's is greater than number of 1's and $s$ is no longer a palindrome.
+\item $vxy$ consits of 0's and ones. Then if we pump $i = 2$, then $s = u v^2 x y^2 z \notin L$, since
+$s$ is no longer a palindrome.
+\end{enumerate}
+
+Therefore $L$ is not context free.
+
+\vspace{0.4cm}
 \problem{2.33}
-Show that $F = \{a^i b^j\: |\: i = kj\text{ for some positive integer } k\}$ is not context free. \\ \\
+Show that $F = \{a^i b^j\: |\: i = kj\text{ for some positive integer } k\}$ is not context free. \\
+
+Let $p$ be the pumping lentgth, $s = a^p a^p b^p \in F$. By pumping lemma 
+there exists $s = uv^ixy^iz \in L$, where $|vxy| \leq p$ and $|vy| > 1$. To prove
+that $L$ is not context free we need to consider following cases
+
+\vspace{0.4cm}
 \problem{2.35}
 Let G be a CFG in Chomsky normal form that contains $b$ variables. Show that if G generates some string with a derivation having 
 at least $2^b$ steps, $L(G)$ is infinite. \\ \\
