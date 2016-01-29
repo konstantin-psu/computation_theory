@@ -216,9 +216,16 @@ since $ a > b $
 
 
 \vspace{0.4cm}
+
+\pagebreak
 \problem{2.7 d}
 $\{x_1 \# x_2 \# \cdots \# x_k |  k \geq 1, \text{ each }x_i \in \{a,b\}^*,\text{ and for some } i \text{ and } j, x_i 
 = {x_j}^R\}$ \\
+
+A PDA that recognizes this language will nondeterministically check all possible combinations of $x_i$ and $x_j$, by pushing
+character of $x_i$ onto the stack, and consuming them when checking $x_j$. And skipping all other 
+correct string sequences. If a pair $x_i = x^R_j$ is found, and all the rest of the imput is in 
+form of $\curl{x_1 \# x_2 \# \cdots \# x_k}$ - Accept, fail otherwise.
 
 \vspace{0.4cm}
 \problem{2.9}
@@ -267,7 +274,7 @@ More formally it is $\{0^{i_1}_1\#0^{i_2}_2\#0^{i_3}_3\#0^{i_4}_4\#\cdots\#0^{i_
 \problem{2.13 b}
 Prove that $L(G)$ is not regular. \\
 
-\begin{enumerate}[Case 1., leftmargin = 1.5cm]
+\begin{enumerate}[\underline{Case} 1., leftmargin = 1.5cm]
 \itemsep0em
 \item Assume that $L(G)$ is regular.
 \item Consider the word $0^p\#0^{2p} \in L(G)$. By pumping lemma there eixsts a word $xyz \in L(G)$, and puping
@@ -285,6 +292,8 @@ This rule applied to grammar $G = (\curl{S},\curl{a,b},\curl{S\rightarrow aSb | 
 that can produce a word:
 $aababb \notin A^*$ \\ \\
 
+\pagebreak
+
 \problem{2.19}
 Let  CFG G be the following grammar.
 \begin{table}[h!]
@@ -297,7 +306,9 @@ $Y \rightarrow b Y \:| \:a Y \:| \:\epsilon$
 
 Give a simple description of L(G) in English. Use that description to give a CFG for $\overline{L(G)}$, the compliment of $L(G)$. \\
 
-L(G) is the language that produces all strings not in $a^nb^n$, i.e. compliment of of $a^nb^n$.
+L(G) is the language that produces all strings not in $a^nb^n$, i.e. compliment of of $a^nb^n$. \\
+
+CFG of $\overline{L(G)}$:
 
 \begin{table}[h!]
 \centering
@@ -331,6 +342,7 @@ $A \rightarrow b S \:| \:a AA $ \\
 $B \rightarrow a S \:| \:b BB $ \\
 \end{tabular}
 \end{table}
+
 \problem{2.28 c}
 $\{w| \text{ the number of a's is at least the number of b's in } w\}$
 
@@ -343,13 +355,7 @@ $B \rightarrow a S \:| \:b BB $ \\
 \end{tabular}
 \end{table}
 
-\begin{table}[h!]
-\centering
-\begin{tabular}{l}
-$S \rightarrow a S\: | \:b B \:|\: a $\\
-$B \rightarrow a S \:| \:b BB $ \\
-\end{tabular}
-\end{table}
+\pagebreak
 
 \problem{2.30}
 Use the pumping lemma to show that the following languages are not context free. \\ \\
@@ -359,7 +365,7 @@ $L = \{ 0^n 1^n 0^n 1^n | n \geq 0  \}$ \\
 Let $p$ be the pumping lentgth, $s = 0^p 1^p 0^p 1^p$. By pumping lemma 
 there exists $s = uv^ixy^iz \in L$, where $|vxy| \leq p$ and $|vy| > 1$. There are two 
 possible cases for $v$ and $y$.
-\begin{enumerate}[Case 1., leftmargin = 1.5cm]
+\begin{enumerate}[\underline{Case} 1., leftmargin = 1.5cm]
 \itemsep0em
 \item $v$ and $y$ contain at most one type of symbols, then when
 we pump $i = p$ we will get string with member of unequal length:
@@ -371,12 +377,13 @@ string will have members out of order, for example $0001110001010111 \notin L$. 
 
 \vspace{0.2cm}
 \problem{2.30 d}
-$L = \{ t_1 \# t_2 \# \cdots \# t_k | k \geq 2,\text{ each } t_i \in \{a,b\}^*,\text{ and }t_i = t_j\text{ for some } i \neq j  \}$  \\
+$L = \{ t_1 \# t_2 \# \cdots \# t_k | k \geq 2,\text{ each } t_i \in \{a,b\}^*,
+\text{ and }t_i = t_j\text{ for some } i \neq j  \}$  \\
 
 Let $p$ be the pumping lentgth, $s = a^p b ^p \# a^p b^p \in L$. By pumping lemma 
 there exists $s = uv^ixy^iz \in L$, where $|vxy| \leq p$ and $|vy| > 1$. There are three
 cases
-\begin{enumerate}[Case 1., leftmargin = 1.5cm]
+\begin{enumerate}[\underline{Case} 1., leftmargin = 1.5cm]
 \itemsep0em
 \item $v$ or $y$ contain $\#$. Then for $i = 0$, $s = uxz$ and it doesn't contain $\# \notin L$
 \item $v$ and $y$ on the left side of $\#$. Then when we pump $i$ left side becomes longer than the right side $\notin L$
@@ -387,12 +394,14 @@ Therefore $L$ is no Context free.
 
 \vspace{0.4cm}
 \problem{2.31}
-Let L be the language of all palindromes over $\{0,1\}$ containing equal numbers of 0s and 1s. Show that B is not context free. \\
+Let L be the language of all palindromes over $\{0,1\}$ containing equal numbers of 0s and 1s. 
+Show that B is not context free. \\
 
 Let $p$ be the pumping lentgth, $s = 0^p 1^2p 0^p \in L$. By pumping lemma 
 there exists $s = uv^ixy^iz \in L$, where $|vxy| \leq p$ and $|vy| > 1$. To prove
-that $L$ is not context free we need to consider following cases
-\begin{enumerate}[Case 1., leftmargin = 1.5cm]
+that $L$ is not context free we need to consider following cases \\
+
+\begin{enumerate}[\underline{Case} 1., leftmargin = 1.5cm]
 \itemsep0em
 \item $vxy$ consits of only 1's. Then if we pump $i = p$, then $s = 0^p 1^4p 0^p \notin L$, since
 number of 1's is greater than number of 0's.
@@ -408,14 +417,33 @@ Therefore $L$ is not context free.
 \problem{2.33}
 Show that $F = \{a^i b^j\: |\: i = kj\text{ for some positive integer } k\}$ is not context free. \\
 
-Let $p$ be the pumping lentgth, $s = a^p a^p b^p \in F$. By pumping lemma 
+Let $p$ be the pumping lentgth, $s = a^{q^2} b^q \in F$, where $q$ is a prime, and $q > p$. By pumping lemma 
 there exists $s = uv^ixy^iz \in L$, where $|vxy| \leq p$ and $|vy| > 1$. To prove
-that $L$ is not context free we need to consider following cases
+that $L$ is not context free we need to consider following cases:
+
+\begin{enumerate}[\underline{Case} 1., leftmargin = 1.5cm]
+\itemsep0em
+\item $vxy$ consits of only a's, then $v = a^k$ and $y = a^l$ in this case it is easy 
+    to find such $i$ that $t = \cfrac{q^2 + i\times(k+l)}{q}$ is not an integer
+\item $vxy$ consits of only b's, then $v = b^k$ and $y =b^l$ in this case it is easy 
+    to find such $i$ that $t = \cfrac{q^2}{q + i\times(k+l)}$ is not an integer
+\item $vxy$ consits of a's and b's, then $v = a^k$ and $y =b^l$, $i$ that $t = \cfrac{q^2 +i\times k}{q + i\times l}$,
+    there are many possible combinations of $i,k,l$, that make $t$ not intger.
+\end{enumerate}
+
+Therefore $F$ is not regular.
 
 \vspace{0.4cm}
 \problem{2.35}
 Let G be a CFG in Chomsky normal form that contains $b$ variables. Show that if G generates some string with a derivation having 
-at least $2^b$ steps, $L(G)$ is infinite. \\ \\
+at least $2^b$ steps, $L(G)$ is infinite. \\
+
+Since Chomsky form can have eiter two variables, or one terminal on the right, therefore it's derivation tree
+will be a binary tree. String $w$ that derived with $2^b$ steps will have length $|w| \geq w^b$. Height of such a tree
+will be $b + 1$, since there is only $b$ variables, then at least one or more variable is used twice, i.e. language 
+contains recursion, hence $L(G)$ is infinite.
+
+\vspace{0.4cm}
 \problem{2.46}
 Consider the following CFG G:
 \begin{table}[h!]
