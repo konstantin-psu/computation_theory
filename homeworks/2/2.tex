@@ -408,65 +408,69 @@ $B \rightarrow a S \:| \:b BB \:| \: \epsilon$ \\
 \end{tabular}
 \end{table}
 
-\pagebreak
 
 \problem{2.30}
 Use the pumping lemma to show that the following languages are not context free. \\ \\
 \problem{2.30 a}
 $L = \{ 0^n 1^n 0^n 1^n | n \geq 0  \}$ \\
 
-Let $p$ be the pumping length, $s = 0^p 1^p 0^p 1^p$. By pumping lemma 
-there exists $s = uv^ixy^iz \in L$, where $|vxy| \leq p$ and $|vy| > 1$. There are two 
+Assume that $L$ is regular. Let $p$ be the pumping length, $s = 0^p 1^p 0^p 1^p$. By pumping lemma 
+there exists $s = uv^ixy^iz \in L$ $\forall i \geq 0$, where $|vxy| \leq p$ and $|vy| > 0$. There are two 
 possible cases for $v$ and $y$.
 \begin{enumerate}[\underline{Case} 1., leftmargin = 1.5cm]
 \itemsep0em
 \item $v$ and $y$ contain at most one type of symbols, then when
-we pump $i = p$ we will get string with member of unequal length:
- $s = 0^p 1^{2p} 0^p 1^p \notin L$ or $s = 0^{2p} 1^p 0^p 1^p \notin L$ or $s = 0^{2p} 1^p 0^{2p} 1^p \notin L$ or 
-$s = 0^{2p} 1^p 0^{2p} 1^{2p} \notin L$
+we pump $i \rightarrow k$ we will get string with member of unequal length:
+ $s = 0^p 1^{p+i} 0^p 1^p \notin L$ or $s = 0^{p+i} 1^p 0^p 1^p \notin L$ or $s = 0^p 1^p 0^{p+i} 1^p \notin L$ or 
+$s = 0^{p} 1^p 0^{p} 1^{p+i} \notin L$
 \item $v$ and $y$ contain different types of symbols, then when $i$ is pumped the resulting 
-string will have members out of order, for example $0001110001010111 \notin L$. Therefore $L$ is not Context free.
-\end{enumerate}
+string will have members out of order, for example $00011100\mathbf{0101010}111 \notin L$.
+\end{enumerate} 
 
-\vspace{0.2cm}
+$s$ cannot be pumped without violating pumping lemma. Therefore $L$ is not Context free.
+
+\pagebreak
+
 \problem{2.30 d}
 $L = \{ t_1 \# t_2 \# \cdots \# t_k | k \geq 2,\text{ each } t_i \in \{a,b\}^*,
 \text{ and }t_i = t_j\text{ for some } i \neq j  \}$  \\
 
-Let $p$ be the pumping length, $s = a^p b ^p \# a^p b^p \in L$. By pumping lemma 
-there exists $s = uv^ixy^iz \in L$, where $|vxy| \leq p$ and $|vy| > 1$. There are three
-cases
+Assume that $L$ is context free. Let $p$ be the pumping length, $s = a^p b ^p \# a^p b^p \in L$. By pumping lemma 
+there exists $s = uv^ixy^iz \in L$ $\forall i \geq 0$, where $|vxy| \leq p$ and $|vy| > 0$. Then 
 \begin{enumerate}[\underline{Case} 1., leftmargin = 1.5cm]
 \itemsep0em
-\item $v$ or $y$ contain $\#$. Then for $i = 0$, $s = uxz$ and it doesn't contain $\# \notin L$
-\item $v$ and $y$ on the left side of $\#$. Then when we pump $i$ left side becomes longer than the right side $\notin L$
-\item $v$ and $y$ on the right side of $\#$. Then when we pump $i$ right side becomes longer than the left side $\notin L$
+\item $v$ or $y$ contain $\#$. Then if we pump $i$ down to $0$, $s = uv^0xy^0z = uxz$ and $s$ no longer contains $\#$, hence $s \notin L$
+\item $v$ and $y$ on the left side of $\#$. Then when we pump up $i$ left side becomes longer than the right side and $s \notin L$
+\item $v$ and $y$ on the right side of $\#$. Analogous to the previous case: when we pump up $i$ right side becomes longer than the left side and  $s \notin L$
 \end{enumerate}
 
-Therefore $L$ is no Context free.
+$s$ cannot be pumped without violating pumping lemma. Therefore $L$ is no Context free.
 
 \vspace{0.4cm}
 \problem{2.31}
 Let L be the language of all palindromes over $\{0,1\}$ containing equal numbers of 0s and 1s. 
 Show that B is not context free. \\
 
-Assume that $F$ is context free, then let $p$ be the pumping length, $s = 0^p 1^2p 0^p \in L$. By pumping lemma 
-there exists $s = uv^ixy^iz \in L$, where $|vxy| \leq p$ and $|vy| > 0$. To prove
+Assume that $F$ is context free, then let $p$ be the pumping length, $s = 0^p 1^{2p} 0^p\in L$. By pumping lemma 
+there exists $s = uv^ixy^iz \in L$ for $\forall i \geq 0$, where $|vxy| \leq p$ and $|vy| > 0$. To prove
 that $L$ is not context free we need to consider following cases \\
 
 \begin{enumerate}[\underline{Case} 1., leftmargin = 1.5cm]
 \itemsep0em
-\item $vxy$ consists of only 1's. Then if we pump $i = p$, then $s = 0^p 1^4p 0^p \notin L$, since
+\item $vxy$ consists of only 1's. Then if we pump $i \rightarrow k$, then $s = 0^p 1^{2p+k} 0^p \notin L$, since
 number of 1's is greater than number of 0's.
-\item $vxy$ consists of only 0's. Then if we pump $i = p$, then $s = 0^2p 1^2p 0^p \notin L$, since
+\item $vxy$ consists of only 0's. Then if we pump $i \rightarrow p$, then $s = 0^{p+k} 1^2p 0^p \notin L$, since
 number of 0's is greater than number of 1's and $s$ is no longer a palindrome.
 \item $vxy$ consists of 0's and ones. Then if we pump $i = 2$, then $s = u v^2 x y^2 z \notin L$, since
-$s$ is no longer a palindrome.
+$s$ is no longer a palindrome, i.e. character are out of order, for exaple for string $000111111000$ let $v$
+be in the first 0's, and let $y$ be in 1's then when pumping $i$ up we get string of $0 \mathbf{0011 0011 0011 }1111000$
+which is not a palindrome.
 \end{enumerate}
 
-Therefore $L$ is not context free.
+$s$ cannot be pumped without violating the pumping lemma. Therefore $L$ is not context free.
 
-\vspace{0.4cm}
+\pagebreak
+
 \problem{2.33}
 Show that $F = \{a^i b^j\: |\: i = kj\text{ for some positive integer } k\}$ is not context free. \\
 
