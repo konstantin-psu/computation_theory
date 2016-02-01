@@ -185,9 +185,9 @@ $\{x_1 \# x_2 \# \cdots \# x_k |  k \geq 1, \text{ each }x_i \in \{a,b\}^*,\text
 \begin{tabular}{l}
 $S \rightarrow A B C $\\
 $A \rightarrow D \# A \:| \: \epsilon $\\
-$B \rightarrow 0 B 0 \: | \: 1 B 1 \: | \: E $\\
+$B \rightarrow a B a \: | \: b B b \: | \: E $\\
 $C \rightarrow \#DC \:| \: \epsilon $\\
-$D \rightarrow 1D \:| \: 0D \: | \: \epsilon $\\
+$D \rightarrow bD \:| \: aD \: | \: \epsilon $\\
 $E \rightarrow \#DE \:| \: \# $\\
 \end{tabular}
 \end{table}
@@ -203,14 +203,14 @@ The PDA would work as follows:\\
 \begin{enumerate}[1., leftmargin = 0.8cm]
 \itemsep0em
 \item Push start symbol on the stack.
-\item If the first symbol is a $b$ then move to accept state, since $a^n b^$ cannot start with $b$
+\item If the first symbol is a $b$ then move to accept state, since $a^n b^n$ cannot start with $b$
     therefore this string is in compliment.
 \item If the first symbol is $a$ then push $a$ on the stack, keep pushing a's for all consecutively 
 following a's. When see first b after stream of a's, start consuming a's from the stack.
 \item If stream is over and there is only start symbol - fail.
 \item If start symbol is consumed when b is scanned, then go to accept $b > a$.
 \item If followed by a, then go to accept, since string has a form of  $a^i b^j a \cdots$.
-\item Last option all bs are consumed, but there is stil a remains on the stack $\rightarrow$ accept state
+\item Last option all bs are consumed, but there is still a remains on the stack $\rightarrow$ accept state
 since $ a > b $
 \end{enumerate}
 
@@ -224,7 +224,7 @@ $\{x_1 \# x_2 \# \cdots \# x_k |  k \geq 1, \text{ each }x_i \in \{a,b\}^*,\text
 
 A PDA that recognizes this language will nondeterministically check all possible combinations of $x_i$ and $x_j$, by pushing
 character of $x_i$ onto the stack, and consuming them when checking $x_j$. And skipping all other 
-correct string sequences. If a pair $x_i = x^R_j$ is found, and all the rest of the imput is in 
+correct string sequences. If a pair $x_i = x^R_j$ is found, and all the rest of the input is in 
 form of $\curl{x_1 \# x_2 \# \cdots \# x_k}$ - Accept, fail otherwise.
 
 \vspace{0.4cm}
@@ -246,9 +246,50 @@ $D \rightarrow bDc \:| \: \epsilon $\\
 \end{tabular}
 \end{table}
 
-The language is not ambiguous... \\
+The language is ambiguous (inherently ambiguous). It contains all strings of format $a^y b^y c^y$, and these can
+be created by different derivations. For example derivation trees for string $abc$: \\
 
-\pagebreak
+\begin{adjustbox}{valign=t}
+\begin{forest}
+[S, tier=1
+    [A, tier=2
+        [a, tier=3]
+        [A, tier=3
+            [$\epsilon$]
+        ]
+        [b, tier=3]
+    ]
+    [B, tier=2
+        [c, tier=3]
+        [B, tier=3
+            [$\epsilon$]
+        ]
+    ]
+]
+\end{forest}
+\end{adjustbox}\qquad
+\begin{adjustbox}{valign=t}
+\begin{forest}
+[S, tier=1
+    [C, tier=2
+        [a, tier=3]
+        [C, tier=3
+            [$\epsilon$]
+        ]
+    ]
+    [D, tier=2
+        [b, tier=3 ]
+        [D, tier=3
+           [$\epsilon$]
+        ]
+        [c, tier=3 ]
+    ]
+]
+\end{forest}
+\end{adjustbox}
+\vspace{0.4cm}
+
+Therefore the language is ambiguous. \\
 
 \problem{2.13}
 Let $G = (V, \sum, R, S)$ be the following grammar. $V = \{S<T U\}; \sum = \{0,\#\};$ and R is the set of rules:
@@ -263,6 +304,8 @@ U $\rightarrow$  $0U00$ $|\#$
 
 \vspace{0.2cm}
 
+\pagebreak
+
 \problem{2.13 a}
 Describe $L(G)$ in English. \\
 
@@ -274,12 +317,13 @@ More formally it is $\{0^{i_1}_1\#0^{i_2}_2\#0^{i_3}_3\#0^{i_4}_4\#\cdots\#0^{i_
 \problem{2.13 b}
 Prove that $L(G)$ is not regular. \\
 
-\begin{enumerate}[\underline{Case} 1., leftmargin = 1.5cm]
+\begin{enumerate}[1., leftmargin = 0.5cm]
 \itemsep0em
 \item Assume that $L(G)$ is regular.
-\item Consider the word $0^p\#0^{2p} \in L(G)$. By pumping lemma there eixsts a word $xyz \in L(G)$, and puping
-lenght p, such that $|xy| \leq p$ and for all $i \geq 0$, $xy^iz \in L$. In case of word = $0^p \# 0^{2p}$, $xy$
-can only be in $0^p$, however for $i \geq 0$ $xy^iz$ is $0^{p+i} \# 0^{2p} \notin L(G)$ is a contradiction. Therefore
+\item Consider the word $0^p\#0^{2p} \in L(G)$. By pumping lemma there exists a word $xyz \in L(G)$, and pumping
+length p, such that $|xy| \leq p$ and for all $i \geq 0$, $xy^iz \in L$. In case of word = $0^p \# 0^{2p}$, $xy$
+can only be in $0^p$, since $|xy|$ msut be less thain $p$, however if $y = 0^k$ and we pump the word down 
+to 0 then we get $0^{p-k} \# 0^{2p} \notin L(G)$, which is a contradiction. Therefore $L(G)$ is not regular.
 $L(G)$ is no regular.
 \end{enumerate}
 
@@ -291,8 +335,6 @@ resulting grammar $G'$A. This grammar is supposed to generate $A*$. \\
 This rule applied to grammar $G = (\curl{S},\curl{a,b},\curl{S\rightarrow aSb | \epsilon},S)$ + $S\rightarrow SS$ we get grammar $G'$
 that can produce a word:
 $aababb \notin A^*$ \\ \\
-
-\pagebreak
 
 \problem{2.19}
 Let  CFG G be the following grammar.
@@ -316,6 +358,8 @@ CFG of $\overline{L(G)}$:
 $S \rightarrow a S b\: | \: \epsilon$
 \end{tabular}
 \end{table}
+
+\pagebreak
 
 \problem{2.28}
 
@@ -346,12 +390,21 @@ $B \rightarrow a S \:| \:b BB $ \\
 \problem{2.28 c}
 $\{w| \text{ the number of a's is at least the number of b's in } w\}$
 
+%\begin{table}[h!]
+%\centering
+%\begin{tabular}{l}
+%$S \rightarrow a A\: | \:b B \:|\: a $\\
+%$A \rightarrow b S \:| \:a AA $ \\
+%$B \rightarrow a S \:| \:b BB $ \\
+%\end{tabular}
+%\end{table}
+
 \begin{table}[h!]
 \centering
 \begin{tabular}{l}
 $S \rightarrow a A\: | \:b B \:|\: a $\\
-$A \rightarrow b S \:| \:a AA $ \\
-$B \rightarrow a S \:| \:b BB $ \\
+$A \rightarrow a A \:| \:S $ \\
+$B \rightarrow a S \:| \:b BB \:| \: \epsilon$ \\
 \end{tabular}
 \end{table}
 
@@ -362,7 +415,7 @@ Use the pumping lemma to show that the following languages are not context free.
 \problem{2.30 a}
 $L = \{ 0^n 1^n 0^n 1^n | n \geq 0  \}$ \\
 
-Let $p$ be the pumping lentgth, $s = 0^p 1^p 0^p 1^p$. By pumping lemma 
+Let $p$ be the pumping length, $s = 0^p 1^p 0^p 1^p$. By pumping lemma 
 there exists $s = uv^ixy^iz \in L$, where $|vxy| \leq p$ and $|vy| > 1$. There are two 
 possible cases for $v$ and $y$.
 \begin{enumerate}[\underline{Case} 1., leftmargin = 1.5cm]
@@ -380,7 +433,7 @@ string will have members out of order, for example $0001110001010111 \notin L$. 
 $L = \{ t_1 \# t_2 \# \cdots \# t_k | k \geq 2,\text{ each } t_i \in \{a,b\}^*,
 \text{ and }t_i = t_j\text{ for some } i \neq j  \}$  \\
 
-Let $p$ be the pumping lentgth, $s = a^p b ^p \# a^p b^p \in L$. By pumping lemma 
+Let $p$ be the pumping length, $s = a^p b ^p \# a^p b^p \in L$. By pumping lemma 
 there exists $s = uv^ixy^iz \in L$, where $|vxy| \leq p$ and $|vy| > 1$. There are three
 cases
 \begin{enumerate}[\underline{Case} 1., leftmargin = 1.5cm]
@@ -397,17 +450,17 @@ Therefore $L$ is no Context free.
 Let L be the language of all palindromes over $\{0,1\}$ containing equal numbers of 0s and 1s. 
 Show that B is not context free. \\
 
-Let $p$ be the pumping lentgth, $s = 0^p 1^2p 0^p \in L$. By pumping lemma 
-there exists $s = uv^ixy^iz \in L$, where $|vxy| \leq p$ and $|vy| > 1$. To prove
+Assume that $F$ is context free, then let $p$ be the pumping length, $s = 0^p 1^2p 0^p \in L$. By pumping lemma 
+there exists $s = uv^ixy^iz \in L$, where $|vxy| \leq p$ and $|vy| > 0$. To prove
 that $L$ is not context free we need to consider following cases \\
 
 \begin{enumerate}[\underline{Case} 1., leftmargin = 1.5cm]
 \itemsep0em
-\item $vxy$ consits of only 1's. Then if we pump $i = p$, then $s = 0^p 1^4p 0^p \notin L$, since
+\item $vxy$ consists of only 1's. Then if we pump $i = p$, then $s = 0^p 1^4p 0^p \notin L$, since
 number of 1's is greater than number of 0's.
-\item $vxy$ consits of only 0's. Then if we pump $i = p$, then $s = 0^2p 1^2p 0^p \notin L$, since
+\item $vxy$ consists of only 0's. Then if we pump $i = p$, then $s = 0^2p 1^2p 0^p \notin L$, since
 number of 0's is greater than number of 1's and $s$ is no longer a palindrome.
-\item $vxy$ consits of 0's and ones. Then if we pump $i = 2$, then $s = u v^2 x y^2 z \notin L$, since
+\item $vxy$ consists of 0's and ones. Then if we pump $i = 2$, then $s = u v^2 x y^2 z \notin L$, since
 $s$ is no longer a palindrome.
 \end{enumerate}
 
@@ -417,18 +470,22 @@ Therefore $L$ is not context free.
 \problem{2.33}
 Show that $F = \{a^i b^j\: |\: i = kj\text{ for some positive integer } k\}$ is not context free. \\
 
-Let $p$ be the pumping lentgth, $s = a^{q^2} b^q \in F$, where $q$ is a prime, and $q > p$. By pumping lemma 
-there exists $s = uv^ixy^iz \in L$, where $|vxy| \leq p$ and $|vy| > 1$. To prove
+Let $p$ be the pumping length, $s = a^{q^2} b^q \in F$, where $q$ is a prime, and $q > p$. By pumping lemma 
+there exists $s = uv^ixy^iz \in L$ $\forall i$, where $|vxy| \leq p$ and $|vy| > 0$. To prove
 that $L$ is not context free we need to consider following cases:
 
 \begin{enumerate}[\underline{Case} 1., leftmargin = 1.5cm]
 \itemsep0em
-\item $vxy$ consits of only a's, then $v = a^k$ and $y = a^l$ in this case it is easy 
-    to find such $i$ that $t = \cfrac{q^2 + i\times(k+l)}{q}$ is not an integer
-\item $vxy$ consits of only b's, then $v = b^k$ and $y =b^l$ in this case it is easy 
-    to find such $i$ that $t = \cfrac{q^2}{q + i\times(k+l)}$ is not an integer
-\item $vxy$ consits of a's and b's, then $v = a^k$ and $y =b^l$, $i$ that $t = \cfrac{q^2 +i\times k}{q + i\times l}$,
-    there are many possible combinations of $i,k,l$, that make $t$ not intger.
+\item $vxy$ consists of only a's, then if $v = a^k$ and $y = a^l$ and $l + k < q$ then $q = m + l + k$ in this case we get 
+    $t = \cfrac{(m+l+k)^2 }{q}$, by pumping i down to 0 we get $wv^0xy^0z \in L$, but $t = \cfrac{(m)^2 }{q}$ is not an integer
+     $a^{m^2}b^q \notin L$, since $q$ is prime.
+\item same logic applies to the case when $vxy$ consists of b's onlye, then if $v = b^k$ and $y =b^l$ where $k+l < q$
+    by pumping i down to 0 we get $t = \cfrac{q^2}{m}$ is not an integer, and 
+     $a^{1^2}b^m \notin L$, since $q$ is prime.
+\item $vxy$ consists of a's and b's, then if $v = a^k$ and $y =b^l$, where $l < q$ and $k < q$, and some let $q = m +l$ 
+    and $q = n + k$, by pumping $i$, we get
+    $t = \cfrac{(n+k)^2 }{m+l}$,
+    there are many possible combinations of $n,m,k,l$, that will make $t$ not integer.
 \end{enumerate}
 
 Therefore $F$ is not regular.
@@ -438,10 +495,9 @@ Therefore $F$ is not regular.
 Let G be a CFG in Chomsky normal form that contains $b$ variables. Show that if G generates some string with a derivation having 
 at least $2^b$ steps, $L(G)$ is infinite. \\
 
-Since Chomsky form can have eiter two variables, or one terminal on the right, therefore it's derivation tree
-will be a binary tree. String $w$ that derived with $2^b$ steps will have length $|w| \geq w^b$. Height of such a tree
-will be $b + 1$, since there is only $b$ variables, then at least one or more variable is used twice, i.e. language 
-contains recursion, hence $L(G)$ is infinite.
+Tree of string $w$ derived in $2^b$ steps will have height at least $b+1$ (since derivation tree of height $b$ 
+can have at most $2^b - 1$ steps). Such a tree contains at least $b+1$ variables, and therefore some variable is used 
+more than once, i.e. string is derived by using recursion. Language $L(G)$ defined by recursive grammar $G$ is infinite.
 
 \vspace{0.4cm}
 \problem{2.46}
@@ -507,16 +563,16 @@ $L(G) = \curl{ (a^nb^n)^i | \text{ where } i,n > 0}$. $ababab \in L(G)$ and has 
 
 Therefore $L(G)$ is ambiguous.
 
-Unambiguous grammar for this language is:
+Unambiguous grammar $G'$ for this language is:
 \begin{table}[h!]
 \centering
 \begin{tabular}{l}
-$S \rightarrow TS \:| \:\epsilon$ \\
+$S \rightarrow TS \:| \:T$ \\
 $T \rightarrow aTb \:| \:ab$
 \end{tabular}
 \end{table}
 
-
+$G'$ is unambigous, since for every string in $L(G)$ there is only one leftmost derivation.
 
 %\begin{homeworkProblem}
 %\end{homeworkProblem}
