@@ -169,6 +169,7 @@
 \begin{homeworkProblem}
 Provide a  formal description of Turing Machines. \\
 
+\textbf{Solution:}\\
 A Turing machine is a 7-tuple, $(Q,\Sigma,\Gamma,\delta,q_0,q_{accept}, q_{reject})$, where $Q,\Sigma, \Gamma$ are all finite setns and.
 \begin{enumerate}[1., leftmargin = 0.8cm]
 \itemsep0em
@@ -186,9 +187,19 @@ A Turing machine is a 7-tuple, $(Q,\Sigma,\Gamma,\delta,q_0,q_{accept}, q_{rejec
 \begin{homeworkProblem}
 Describe  informally (no more  than  half  a  page)  the operation  of a  Turing Machine. \\
 
+\textbf{Solution:}\\
+Turing machine is a theoretical computation model similar to to finate automation but with
+unlimited and unrestricted memory. It accurately models a general purpose computer.\\
 Turing machine consists of infinite tape (unlimited memory), and a tape head that can move
-left and right and read and write symbols from/to the tape.
+left and righ, scan and write symbols from/to the tape.
+Initially input is placed on tape, with the rest of the tape containing blanks, when computation starts with head
+positioned at the beginning of the input. During computation the head can scan the symbol under
+the head, replace it with another symbol and move left (can't pass start point) or right, one symbol at a time.
+When computation is over, TM will be in reject or accept state, with the resulting output written on the tape.
+For some strings TM will never reach accept or reject sate it will instead loop forever.
 \end{homeworkProblem}
+
+\pagebreak
 
 \begin{homeworkProblem}
 Design a  Turning Machine that  takes  3  numbers in unary  representation and adds  
@@ -198,14 +209,21 @@ the problem $3+4+2$  would  be represented on the tape  as: $111\#1111\#11$ the
 machine should accept with  the following  string on the tape: $111111111$. Give  your  
 machine in graph  notation,  in the style  of Figure $3.8$. \\
 
+\textbf{Solution:}\\
+The problem doesn't specify if we are allowed to have empty strings, i.e. string in form
+$\#\#1111$. This machine is created under assumption that empty strings are not allowed. \\ \\
 Machine M that recognizes this language is simple, since we now upfront that 3 numbers 
 are added separated by two $\#$. Machine $M$ works as follows:\\
 
 ``On input $w$:
 \begin{enumerate}[1., leftmargin = 1.5cm]
 \itemsep0em
-\item read until the end of the input, replacing 1s and $\#$ with 1s, if see any other symbol fail.
-\item erase last two 1s with blanks by moving right, and accept.
+\item scan first symbol, if it is not 1, reject, otherwise replace it with 1 and move right.
+\item scan next symbol, if 1 found, replace with 1 move right and repeat, if it is $\#$, replace it with 1 goto next, reject on blank
+\item scan next symbol, if 1 found, replace with 1 move right and repeat, if it is $\#$, replace it with 1 goto next, reject on blank
+\item scan next symbol, if 1 found, replace with 1 move right and repeat, if it is $\#$ reject, if blank found goto next
+\item move two positions left, and erase symbols every move (replace with blanks). Accept.
+\item
 \end{enumerate}
 
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,
@@ -238,16 +256,21 @@ are added separated by two $\#$. Machine $M$ works as follows:\\
 
 \end{homeworkProblem}
 
+
 \begin{homeworkProblem}
 What  is a  Decidable  Language? \\
 
+\textbf{Solution:}\\
 A language $L$ is decidable (or Turing decidable) if there exists a Turing machine $M$ such that
 on input $x$, $M$ accepts if $x \in L$, and $rejects$ otherwise.
 \end{homeworkProblem}
 
+\pagebreak
+
 \begin{homeworkProblem}
 What  is a  Turing-Recognizable Language?\\
 
+\textbf{Solution:}\\
 A language $L$ is recognizable (or Turing recognizable) if there exists a Turing machine $M$ such that
 on input $x$, $M$ accepts if $x \in L$, but may either reject or loop forever otherwise.
 \end{homeworkProblem}
@@ -255,29 +278,33 @@ on input $x$, $M$ accepts if $x \in L$, but may either reject or loop forever ot
 \begin{homeworkProblem}
 What  is a  Recursively Enumerable Language?\\
 
+\textbf{Solution:}\\
 Same as Turing-recongnizable.
 \end{homeworkProblem}
 
 \begin{homeworkProblem}
 State  the Church-Turing  Thesis. \\
 
-Every effective calculation can be carried by a Turing Machine.\\
-Effective calculation of a procedure M can be defined as:
-\begin{enumerate}[1., leftmargin = 1.5cm]
-\itemsep0em
-\item M is set out in terms of a finite number of exact instructions (each instruction being expressed by means of a finite number of symbols);
-\item M will, if carried out without error, produce the desired result in a finite number of steps;
-\item M can (in practice or in principle) be carried out by a human being unaided by any machinery save paper and pencil;
-\item M demands no insight or ingenuity on the part of the human being carrying it out.
-\end{enumerate}
+\textbf{Solution:}\\
+Church-Turing Thesis - algorithm/problem is computable if it's computable by a Turing Machine/Lambda Calculus. \\ \\
+%Every effective calculation can be carried by a Turing Machine.\\
+%Effective calculation of a procedure M can be defined as:
+%\begin{enumerate}[1., leftmargin = 1.5cm]
+%\itemsep0em
+%\item M is set out in terms of a finite number of exact instructions (each instruction being expressed by means of a finite number of symbols);
+%\item M will, if carried out without error, produce the desired result in a finite number of steps;
+%\item M can (in practice or in principle) be carried out by a human being unaided by any machinery save paper and pencil;
+%\item M demands no insight or ingenuity on the part of the human being carrying it out.
+%\end{enumerate}
 
 \end{homeworkProblem}
 
-\problem{3.6}
+\problem{3.6} \\
 In Theorem 3.21, we showed that a language is Turing-recognizable iff some enumerator
 enumerates it. Why didn't we use the following simpler algorithm for the forward direction
 of the proof? As before, $s_1,s_2,\cdots$ is a list of strings in $\Sigma^*$ \\
 
+\textbf{Solution:}\\
 E = ``Ignore the input.
 \begin{enumerate}[1., leftmargin = 1.5cm]
 \itemsep0em
@@ -288,15 +315,19 @@ E = ``Ignore the input.
 
 The problem with this definition is that if on step 2 M loops on some input 
 $s_j$, then $E$ will fail to check any input after, in this case $E$ will
-fail to enumerate the language.  \\
+fail to enumerate the language.  \\ \\
+
+\pagebreak
+
 \problem{3.8}
 
 Give implementation-level descriptions of Turing machines that decide the 
-following languages over the alphabet $\curl{0,1}$
+following languages over the alphabet $\curl{0,1}$ \\ 
 
-\problem{3.8   (b)}
+\problem{3.8   (b)} \\
 $\curl{w | w \text{ contains twice as many 0s as 1s}}$ \\
 
+\textbf{Solution:}\\
 \begin{enumerate}[1., leftmargin = 1.5cm]
 \itemsep0em
 \item Scan the tape for the first 0 that has not been marked, if 
@@ -306,9 +337,10 @@ move back to the start of the input.
 \item Scan for the first unmarked 1, if none reject, otherwise mark it.
 \item  Move the head to the beginning of the input, and goto step 1.
 \item Move the head to the beginning of the input, and scan for unmarked
-1s, if none accept, otherwise reject.
+1s, if none accept, otherwise reject. \\
 \end{enumerate}
-\problem{3.9}
+
+\problem{3.9} \\
 Let a k-$PDA$ be a pushdown automaton that has $k$ stacks. Thus a 0-$PDA$
 is an NFA and a 1-$PDA$ is a conventional $PDA$. You already know that 1-$PDA$s
 are more powerful (recognize a larger class of languages) htan 0-$PDA$s.
@@ -319,6 +351,9 @@ are more powerful (recognize a larger class of languages) htan 0-$PDA$s.
     (Hint: Simulate a Turing machine tape with two stacks.)
 \end{enumerate}
 
+\pagebreak
+
+\textbf{3.9 Solution:}\\
 \begin{enumerate}[a., leftmargin = 1.5cm]
 \itemsep0em
 \item It is easy to show by example: 1-PDA is not powerful enough to recognize $L = \curl{a^n b^n c^n |
@@ -335,11 +370,14 @@ $TM$ can be simulated by a 2-PDA as follows:\\
 First stack is responsible for handling everything on the left side of the TMs head, and right side
 for handling everything on the right side of the TMs head. On every $M$ left transition $S$
 $\delta(q_i,c_i) = (q_j,c_j,L)$ PDA pops $c_i$ off stack 2, pushes $c_j$ into stack 2, pops stack 1 and 
-pushes the character into stack 2, and goes from state $q_i$ to $q_j$. Analogous for $\delta(q_i,c_i) = (q_j,c_j,R)$
+pushes the character into stack 2, and goes from state $q_i$ to $q_j$. Analogous for $\delta(q_i,c_i) = (q_j,c_j,R)$\\
+
+Regular Turing Machine is equal in computing capability to all other variations of computing machines and 
+it can be simulated by 2-PDA, therefore 2-PDA and 3-PDA are equivalent.
 
 
 \end{enumerate}
-\problem{3.11}
+\problem{3.11} \\
 A \textbf{Turing machine with doubly infinite tape} is similar to an ordinary
 Turing machine, but its tape is infinite to the left as well as to the right. The tape
 is initially filled with blanks except for the portion that contains the input. Computation is
@@ -347,7 +385,7 @@ defined as usual except that the head never encounters an end to the tape as it
 moves leftward. Show that this type of Turing machine recognizes the class of Turing-recognizable 
 languages. \\
 
-
+\textbf{Solution:}\\
 \begin{enumerate}[1., leftmargin = 1.5cm]
 \itemsep0em
 \item It easy to show that \textbf{doubly infinite tape TM} can simulate regular $TM$ by not using the 
@@ -361,6 +399,7 @@ Show that the collection of decidable languages is closed under the operation of
 \problem{3.15  (b)}
 concatenation.\\
 
+\textbf{Solution:}\\
 For any two decidable languages $L_1$ and $L_2$, let $M_1$ and $M_2$ be TMs that decide them.
 Concatenation of two languages $L_1$ and $L_2$ is language $C = \curl{xy | \text{ where 
     } x \in L_1 \text{ and } y \in L_2}$.
@@ -379,6 +418,7 @@ split input $w$ into two $x$ and $y$, two check all possible combinations, i.e:\
 \problem{3.15  (d)}
 complementation.\\
 
+\textbf{Solution:}\\
 For any decidable language $L$, let $M$ be TM that decides it.
 We construct TM $M'$ that decides the complement  of $L$: \\
 
