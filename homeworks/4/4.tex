@@ -166,5 +166,139 @@
 
 \pagebreak
 
+\problem{4.1} \\
+Answer all parts for the following DFA M and give reasons for your answers.
+
+{\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,
+                    semithick, transform shape, scale = 1]
+  \tikzstyle{every state}=[fill=none,draw=black,text=black]
+
+  \node[initial,state, accepting]     (A)                    {$q_a$};
+  \node[state]             (C) [below right of=A ]       {$q_c$};
+  \node[state]             (B) [above right of=C]       {$q_b$};
+
+  \path (A) edge [bend left]  node [align=center] {1}   (B)
+            edge [loop above] node [align=center] {0}   (A)
+        (B) edge [bend left]  node [align=center] {0,1} (C)
+        (C) edge [bend left]  node [align=center] {1}   (B)
+            edge [bend left]  node [align=center] {0}   (A);
+\end{tikzpicture}
+
+}
+
+\begin{enumerate}[1., leftmargin = 1.5cm]
+\itemsep0em
+\item Is $\langle M,0100 \rangle \in A_{DFA}$?\\
+    Yes. The DFA M accepts 0100.
+\item Is $\langle M,011 \rangle \in A_{DFA}$?
+    No. The DFA M doesn't accept 011.
+\item Is $\langle M \rangle \in A_{DFA}$?
+    No. This input has only a single component and thus is not of the correct form.
+\item Is $\langle M,0100 \rangle \in A_{REX}$?
+    No. The first component is not a regular expression and so the input is not of the correct form.
+\item Is $\langle M \rangle \in E_{DFA}$?
+    No. M's language isn't empty.
+\item Is $\langle M,M \rangle \in EQ_{DFA}$?
+    Yes. M accepts the same language as itself.
+\end{enumerate}
+
+\problem{4.2} \\
+
+    Consider the problem of determining whether a DFA and regular expression are equivalent. Express this problem as a language and show that it is decidable. \\
+
+\textbf{Solution}\\
+    
+    Let $EQ_{DFA,REGEX} = \curl{\langle A, R \rangle | A \text{ is a } DFA, R \text{ is a Regular Expression and } L(A) = L(R)} $. The following TM 
+    decides $EQ_{DFA,REGEX}$
+    
+    On input $ \langle A,R \langle $, where $A$ is a DFA, and $R$ is a regular expression do the following:
+    \begin{enumerate}[1., leftmargin = 1.5cm]
+    \itemsep0em
+    \item Convert $R$ to equivalent DFA $R_{D}$.
+    \item Run $EQ_{DFA}$ as a subroutine on $\langle A, R_{D} \rangle$.
+    \item If $EQ_{DFA}$ accepts, $accept$, otherwise $reject$.
+    \end{enumerate}
+
+\pagebreak
+
+\problem{4.3} \\
+
+    Let $ALL_{DFA} = \curl{\langle A \rangle | A \text{ is a } DFA \text{ and } L(A) = \Sigma^*} $. Show that $ALL_{DFA}$ is decidable.\\ \\
+    
+    Since class of DFA is closed under complement, we can prove that $ALL_{DFA}$ is decidable by constructing it:\\
+
+    On input $ \langle A \langle $, where $A$ is a DFA, do the following:
+    \begin{enumerate}[1., leftmargin = 1.5cm]
+    \itemsep0em
+    \item Convert $A$ to $\overline{A}$ (complement of $A$).
+    \item Run $E_{DFA}$ as a subroutine on $\overline{A}$, check if $L(\overline{A}) = \emptyset $ or not.
+    \item $L(\overline{A}) = \emptyset $ return $accept$, otherwise return $reject$
+    \end{enumerate}
+
+\problem{4.6} \\
+
+    Let X be the set $\curl{1,2,3,4,5}$ and $Y$ be the set $\curl{6,7,8,9,19}$. We describe the functions $ f : X \rightarrow Y$ and $g: X \rightarrow Y$
+    in the following tables. Answer each part and give a reason for each negative answer.
+
+    \begin{table}[h!]
+    \centering
+    \begin{tabular}{l|l}
+     $n$   & $f(n)$  \\ \hline
+     1     & 6 \\
+     2     & 7 \\
+     3     & 6 \\
+     4     & 7 \\
+     5     & 6 
+    \end{tabular}
+    \quad
+    \begin{tabular}{l|l}
+     $n$& $g(b)$  \\ \hline
+     1  & 10 \\
+     2  & 9 \\
+     3  & 8 \\
+     4  & 7 \\
+     5  & 6
+    \end{tabular}
+    \end{table}
+
+    \begin{enumerate}[1., leftmargin = 1.5cm]
+    \itemsep0em
+    \item Is $f$ one-to-one?
+        No. $f$ is not one-to-one because $f(1) = f(3)$
+    \item Is $f$ onto?
+        No. $f$ is not onto, because there doesn't exist $x \in X$ such that $f(x) = 8$.
+    \item Is $f$ a correspondence?
+        No. $f$ is not a correspondence because $f$ is not one-to-one and onto.
+    \item Is $g$ one-to-one?
+        Yes. $g$ is one-to-one.
+    \item Is $g$ onto?
+        Yes. $g$ is onto.
+    \item Is $g$ a correspondence?
+        Yes. $g$ is a correspondence because $g$ is one-to-one and onto.
+    \end{enumerate}
+
+\pagebreak
+
+\problem{4.11} \\
+
+    Let $INFINITE_{PDA} = \curl{\langle M \rangle | M \text{ is a } PDA \text{ and } L(M) \text{ is an infinite language}}$.
+    Show that $INFINITE_{PFA} is decidable$ \\ \\
+
+    Build a Turing machine that will do the following.
+    Read hMi and create an equivalent context-free
+    grammar G.
+    Convert G to Chomsky Normal Form. Call it G
+    0
+    .
+    Do a breadth-first search of the grammar rules of G
+    0
+    looking for recursion.
+    That is, does there exist a derivation A
+    +=⇒ uAv?
+    If so, then accept hMi.
+    If not, then reject hMi.
+
+    http://people.hsc.edu/faculty-staff/robbk/Coms461/Lectures%202008/Lecture%2031%20-%20The%20Halting%20Problem%20-%20Undecidable%20Languages.pdf
 
 \end{document}
