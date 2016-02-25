@@ -1,0 +1,213 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{wrapfig}
+\usepackage{extramarks}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage{forest,adjustbox}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}                     
+          \setlist[enumerate, 1]{1\textsuperscript{o}}
+
+
+
+\usepackage{listings}
+\usepackage{xcolor}
+%\lstset { %
+%  language=C++,
+%  backgroundcolor=\color{black!5}, % set backgroundcolor
+%  basicstyle=\footnotesize,% basic font setting
+%}
+
+%\usetikzlibrary{automata,positioning}
+\usetikzlibrary{positioning,shapes,shadows,arrows,automata} %
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkClass}
+\chead{ (\hmwkClassInstructor\ \hmwkClassTime) }
+\rhead{\shortName \hspace{0.4cm} \hmwkTitle}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\newcommand\curl[1]{\{#1\}}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+  \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+  \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+  \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+  \stepcounter{#1}
+  \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+  \ifnum#1>0
+    \setcounter{homeworkProblemCounter}{#1}
+  \fi
+  \section{Problem \arabic{homeworkProblemCounter}}
+  \setcounter{partCounter}{1}
+  \enterProblemHeader{homeworkProblemCounter}
+}{
+  \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%  - Title
+%  - Due date
+%  - Class
+%  - Section/Time
+%  - Instructor
+%  - Author
+%
+
+\newcommand{\hmwkTitle}{Homework\ \#5}
+\newcommand{\hmwkDueDate}{March 2 2016}
+\newcommand{\hmwkClass}{CS581 Theory of Computation}
+\newcommand{\hmwkClassTime}{Winter 2016}
+\newcommand{\hmwkClassInstructor}{Harry H. Porter}
+\newcommand{\hmwkAuthorName}{Konstantin Macarenco}
+\newcommand{\shortName}{Konstantin M.}
+
+%
+% Title Page
+%
+
+\title{
+  \vspace{2in}
+  \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+  \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 2:00pm}\\
+  \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+  \vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+\newcommand{\answ}[1]{\hspace{1cm}\textbf{Answ:} #1}
+\newcommand{\problem}[1]{\large{\textbf{Problem #1}}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\newcommand\Vtextvisiblespace[1][.3em]{%
+  \mbox{\kern.06em\vrule height.3ex}%
+  \vbox{\hrule width#1}%
+  \hbox{\vrule height.3ex}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\problem{5.3} \\
+Find a match in the following instance of the Post Correspondence Problem.\\
+
+$\left \{ \left [ \cfrac{ab}{abab} \right ], \left [ \cfrac{b}{a} \right ], \left [ \cfrac{aba}{b} \right ], \left [ \cfrac{aa}{a} \right ] \right \}$ \\
+
+\textbf{Solution}\\
+
+$  \cfrac{ab}{abab}  , \cfrac{ab}{abab}, \cfrac{aba}{b} , \cfrac{b}{a} , \cfrac{b}{a} ,   \cfrac{aa}{a}, \cfrac{aa}{a}  $  \\
+
+\problem{5.4} \\
+
+If $A \leq _m B$ and B is a regular language, does that imply that A is a regular language? Why or why not?\\
+
+\textbf{Solution}\\
+
+No it doesn't imply that A is regular, for example: $\curl{a^nb^n\ | \ n \geq 0}$ can be reduced to $\curl{a^n}\ |\ n \geq 0$, by 
+following procedure:
+Check if input $\in a^n,b^n$, output $a^n$ it is, and $b$ if is is not. \\
+
+Description of the TM form problems 1 and 2.\\
+\begin{enumerate}[1., leftmargin = 0.5cm]
+\itemsep0em
+\item $Q = \curl{A,B,C,D}$
+\item $\Sigma = \curl{0,1}$
+\item $\Gamma = \curl{0,1,_}$
+\item $\delta = $
+    \begin{enumerate}[1., leftmargin = 0.5cm]
+    \itemsep0em
+    \item $\delta (A,0) = (B,1,R)$
+    \item $\delta (A,1) = (A,1,R)$
+    \item $\delta (A,_) = (C,_,L)$
+
+    \item $\delta (B,0) = (D,0,L)$
+    \item $\delta (B,1) = (A,0,R)$
+    \item $\delta (B,_) = (D,_,L)$
+    \end{enumerate}
+\item $q_0$ = A
+\item  $q_{accept} = C$
+\end{enumerate}
+
+\problem{1} \\
+
+\problem{2} \\
+
+\end{document}
