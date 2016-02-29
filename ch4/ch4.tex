@@ -1,0 +1,254 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{wrapfig}
+\usepackage{extramarks}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage{forest,adjustbox}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}                     
+          \setlist[enumerate, 1]{1\textsuperscript{o}}
+
+
+
+\usepackage{listings}
+\usepackage{xcolor}
+%\lstset { %
+%  language=C++,
+%  backgroundcolor=\color{black!5}, % set backgroundcolor
+%  basicstyle=\footnotesize,% basic font setting
+%}
+
+%\usetikzlibrary{automata,positioning}
+\usetikzlibrary{positioning,shapes,shadows,arrows,automata} %
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkClass}
+\chead{ (\hmwkClassInstructor\ \hmwkClassTime) }
+\rhead{\shortName \hspace{0.4cm} \hmwkTitle}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\newcommand\curl[1]{\{#1\}}
+\newcommand\angl[1]{\langle #1 \rangle}}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+  \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+  \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+  \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+  \stepcounter{#1}
+  \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+  \ifnum#1>0
+    \setcounter{homeworkProblemCounter}{#1}
+  \fi
+  \section{Problem \arabic{homeworkProblemCounter}}
+  \setcounter{partCounter}{1}
+  \enterProblemHeader{homeworkProblemCounter}
+}{
+  \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%  - Title
+%  - Due date
+%  - Class
+%  - Section/Time
+%  - Instructor
+%  - Author
+%
+
+\newcommand{\hmwkTitle}{Chapter 4 review}
+\newcommand{\hmwkDueDate}{February 22 2016}
+\newcommand{\hmwkClass}{CS581 Theory of Computation}
+\newcommand{\hmwkClassTime}{Winter 2016}
+\newcommand{\hmwkClassInstructor}{Harry H. Porter}
+\newcommand{\hmwkAuthorName}{Konstantin Macarenco}
+\newcommand{\shortName}{Konstantin M.}
+
+%
+% Title Page
+%
+
+\title{
+  \vspace{2in}
+  \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+  \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 2:00pm}\\
+  \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+  \vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+\newcommand{\answ}[1]{\hspace{1cm}\textbf{Answ:} #1}
+\newcommand{\problem}[1]{\large{\textbf{Problem #1}}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\newcommand\Vtextvisiblespace[1][.3em]{%
+  \mbox{\kern.06em\vrule height.3ex}%
+  \vbox{\hrule width#1}%
+  \hbox{\vrule height.3ex}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\textbf{Decidable languages}
+\begin{enumerate}[1., leftmargin = 0.5cm]
+\itemsep0em
+    \item Building deciders for various languages
+    
+    \item $A_{DFA} = \curl{\langle B, w \rangle | B \text{ is a DFA that accepts } w }$ - Is decidable. \\
+        On input "w" construct B, accept if B accepts, reject if B rejects.
+
+    \item $A_{NFA} = \curl{\langle N, w \rangle | N \text{ is a NFA that accepts } w }$ - Is decidable. \\
+        On input "w" convert N into DFA B, run $A_{DFA}$ on $\langle B, w \rangle $ accept if $A_{DFA}$ accepts, otherwise reject.
+
+    \item $A_{REG} = \curl{\langle R, w \rangle | R \text{ is a Regex that generate } w }$ - Is decidable. \\
+        On input "w" convert R into NFA N, run $A_{NFA}$ on $\langle N, w \rangle $ accept if $A_{NFA}$ accepts, otherwise reject.
+
+    \item $E_{DFA} \curl{\langle B \rangle | B \text{ DFA and L(B) } = \emptyset}$ \\
+        On input $\langle B \rangle$ Recursively mark all the states reachable from the start state. If no accept state is marked - accept, otherwise reject.
+
+    \item $EQ_{DFA}  \curl{\angl{A, B} | A,B \text{ are DFAs and L(A) = L(B)}}$ \\
+        On input $\angl{A,B}$ construct symmetric difference C of A and B, and run $E_{DFA}$ on C, accept if $E_{DFA}$ accepts, and reject otherwise.
+    
+    \item $A_{CFG} = \curl{\langle C, w \rangle | C \text{ is a CFG that generates } w }$ - Is decidable. \\
+        On input "w" convert C into chomsky normal form C', generate all strings that can be generated in $2n - 1 $ steps, where
+        $n$ is the lenght of $w$, if $w \in Generated$, accept, otherwise
+        reject.
+
+    \item $E_{CFG} \curl{\langle C \rangle | C \text{ CFG and L(C) } = \emptyset}$  - is decidable\\
+        On input $\angl{C}$. Recursively mark all the strings that can lead to terminals. If start string is marked reject, otherwise accept.
+
+    \item $EQ_{CFG}  \curl{\angl{A, B} | A,B \text{ are CFGs and L(A) = L(B)}}$ - is not decidable\\
+
+    \item Every Question about Regular languages is decidable.
+
+    \item Some questions about CFLs are decidable, but some are not.
+
+    \item The set of all Turing machines is countably infinite.
+
+    \item The set of all Turing-Recognizable languages if countably infinite.
+
+    \item The set of all Languages is uncountably infinite.
+
+\end{enumerate}
+
+\textbf{Undecidable languages}
+\begin{enumerate}[1., leftmargin = 0.5cm]
+\itemsep0em
+
+    \item  Undecidable examples
+        \begin{enumerate}[1., leftmargin = 0.5cm]
+        \itemsep0em
+        \item Is a CFG ambiguous
+        \item Do two CFGs have any strings the can generate in common?
+        \item Is the complements of a cfg also a cfg?
+        \end{enumerate}
+    
+    \item $A_{TM} = \curl{\langle M, w \rangle | M \text{ is a TM that accepts } w }$ - Is turing recognizable. (Universal Turing machine)\\
+        On input "w" construct and run M, accept if M accepts, reject or halt if M rejects or halts.
+
+    \item Countability proof by Cantors diagonalization method.
+    \item Onto (every element in A has corresponding element in B) vs one-to-one(every element in A corresponds to a unique element in B) function. 
+    \item Correspondence - onto and one-to-one.
+    \item Infinite number of languages is infinite and not countable, number of TM is infinitely countable therefore some languages are not Turing
+        Recongnizable
+
+    \item Halting problem - proof that $A_{TM}$ is not decidable.
+        \begin{enumerate}[a., leftmargin = 0.5cm]
+        \itemsep0em
+            \item Assume that $A_{TM}$ is decidable.
+            \item Construct TM H that decides $A_{TM}$\\
+                H on input $\angl{M,w}$ accepts if M accepts, and rejects if M rejects.
+                
+            \item Construct a TM D that takes a description of a turing machine as an input $\angl{M}$, and uses H as subroutine in the following way: \\
+                It runs H on inputs $\angl{M,M}$, and accepts if H rejects, and rejects if H accepts.
+            \item  Run D on description of itself the we get a contradiction:\\
+                D accepts, when D rejects D, and \\
+                D rejects, when D accepts D. \\
+                \textbf{PARADOX}
+            \item Hence we get a contradiction, therefore $A_{TM}$ is not Decidable.
+        \end{enumerate}
+
+    \item If complement of a language is recognizable then Language is called Turing Co-recognizable.
+
+    \item If a languages is turing recognizable and turing co-recognizable, then this language is decidable.
+\end{enumerate}
+
+\end{document}

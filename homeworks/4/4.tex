@@ -50,6 +50,7 @@
 \renewcommand\footrulewidth{0.4pt}
 
 \newcommand\curl[1]{\{#1\}}
+\newcommand\angl[1]{\langle #1 \rangle}}
 
 \setlength\parindent{0pt}
 
@@ -209,15 +210,15 @@ Answer all parts for the following DFA M and give reasons for your answers.
 
 \textbf{Solution}\\
     
-    Let $EQ_{DFA,REGEX} = \curl{\langle A, R \rangle | A \text{ is a } DFA, R \text{ is a Regular Expression and } L(A) = L(R)} $. The following TM 
+    Let $EQ_{DFA,REGEX} = \curl{\langle A, R \rangle \ |\  A \text{ is a  DFA}, R \text{ is a Regular Expression and } L(A) = L(R)} $. The following TM 
     decides $EQ_{DFA,REGEX}$
     
     On input $ \langle A,R \langle $, where $A$ is a DFA, and $R$ is a regular expression do the following:
     \begin{enumerate}[1., leftmargin = 1.5cm]
     \itemsep0em
     \item Convert $R$ to equivalent DFA $R_{D}$.
-    \item Run $EQ_{DFA}$ as a subroutine on $\langle A, R_{D} \rangle$.
-    \item If $EQ_{DFA}$ accepts, $accept$, otherwise $reject$.
+    \item Construct and run $EQ_{DFA}\ E$  as a subroutine on $\langle A, R_{D} \rangle$.
+    \item $Accept$ if $E$ accepts, otherwise $reject$.
     \end{enumerate}
 
 \pagebreak
@@ -228,14 +229,16 @@ Answer all parts for the following DFA M and give reasons for your answers.
     
     \textbf{Solution}\\
 
-    Since class of DFA is closed under complement, we can prove that $ALL_{DFA}$ is decidable by constructing it:\\
+    Since class of DFA is closed under complement, we can prove that $ALL_{DFA}$ is decidable by constructing $\overline{ALL_{DFA}}$: 
+    and testing if it accepts empty language.\\
 
-    On input $ \langle A \langle $, where $A$ is a DFA, do the following:
+    We construct $ALL_{DFA}$ as follows:\\
+    On input $ \langle A \rangle $, where $A$ is a DFA, do the following:
     \begin{enumerate}[1., leftmargin = 1.5cm]
     \itemsep0em
     \item Convert $A$ to $\overline{A}$ (complement of $A$).
-    \item Run $E_{DFA}$ as a subroutine on $\overline{A}$, check if $L(\overline{A}) = \emptyset $ or not.
-    \item $L(\overline{A}) = \emptyset $ return $accept$, otherwise return $reject$\\
+    \item Construct and run $E_{DFA}$ E as a subroutine on $\overline{A}$, check if $L(\overline{A}) = \emptyset $ or not.
+    \item Accept if E return $accept$, otherwise $reject$.\\
     \end{enumerate}
 
 \problem{4.6}
@@ -286,21 +289,22 @@ Answer all parts for the following DFA M and give reasons for your answers.
 
 \problem{4.11}
 
-    Let $INFINITE_{PDA} = \curl{\langle M \rangle | M \text{ is a } PDA \text{ and } L(M) \text{ is an infinite language}}$.
+    Let $INFINITE_{PDA} = \curl{\langle M \rangle \ |\  M \text{ is a } PDA \text{ and } L(M) \text{ is an infinite language}}$.
     Show that $INFINITE_{PDA}$ is decidable \\
 
     \textbf{Solution}\\
 
     Build a Turing machine that will do the following.
-    Read $\langle M \rangle$ and create an equivalent context-free grammar G.\\
 
-    \begin{enumerate}[1., leftmargin = 0.6cm]
+    On input $\angl{M}$, where M is a PDA:
+
+    \begin{enumerate}[1., leftmargin = 1.5cm]
     \itemsep0em
-    \item Convert G to Chomsky Normal Form. Call it $G'$
+    \item Read $\langle M \rangle$ and create an equivalent context-free grammar G.
+    \item Convert G into Chomsky Normal Form  $G'$
     \item Do a breadth-first search of the grammar rules of $G'$ looking for recursion.
           That is, does there exist a derivation $A \stackrel{+}{\Rightarrow} uAv$?
-    \item If so, then accept $\langle M \rangle$.
-    \item If not, then reject $\langle M \rangle$.
+    \item If yes, then accept $\langle M \rangle$, $reject$ otherwise.
     \end{enumerate}
 
 \end{document}

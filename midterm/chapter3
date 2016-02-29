@@ -1,0 +1,89 @@
+Exercise 3.8
+
+w | w contains twice as many 0s as 1s
+
+1. Scan for first unmarked 0, if none goto 5, mark it.
+2. Scan tape for the first unmarked 0, if none reject otherwise mark it.
+3. Scan tape for the first unmarked 1, if none reject otherwise mark it.
+4. GoTo step 1
+5. Scan tape for 1s if none accept, otherwise reject.
+
+
+(c) w | w does not contain twice as many 0s as 1s.
+
+On input w:
+1. Construct TM M from previous exercise.
+2. Run M on w.
+3. If M accepts, reject if M rejects, accept.
+
+Exercise 3.10 
+
+Write once Turing machine, same write Twice, but uses two tape spaces to store, and write.
+
+Exercise 3.11 
+
+A Turing machine with doubly infinite tape. (i.e. head can travel infinitely left)
+
+Two direction proof:
+
+1. Simulate regular TM with DIT TM by not using left side.
+2. Simulate DIT TM, by a two tape TM.
+
+
+Exercise 3.12 
+
+A Turing Machine with left reset: Special Transition function:
+
+$\delta : Q \times \Gamma \rightarrow$
+
+Two directional proof:
+
+1. Simulate regular TM with LR TM:
+    Simulate left move by doing left reset and moving head 
+    to n - 1 position
+
+2. Simulate LR TM with regular TM:
+    Simulate reset by moving head to the initial position without altering 
+    tape
+
+Exercise  3.13 A Turing machine with stay put instead of left.
+
+Not equivalent to regular TM.
+
+1. Simulate with NFA
+2. Simulate NFA
+
+
+Exercise 3.14
+
+A queue automation is like a push down automation except that the stack is replaced by a queue, 
+
+Exercise 3.15
+
+Collection of decidable languages is closed under the operation of
+
+(a) Union:
+
+1. Run M1 and M2, if both accept -accept
+2. Otherwise reject
+
+(b). Concatenation
+
+1. Nondeterministically, split input into two parts.
+2. Run M1 and M2 on each branch
+3. If both accept in at least one branch - accept. Otherwise reject.
+
+(c) Star
+
+1. Cut input into multiple parts
+2. Run M on the input.
+3. If M accepts all parts -accept, otherwise reject.
+
+(d) Intersection
+
+1. Run M1 and M2 in parallel
+2. Reject if  both reject. Otherwise accept
+
+(e) Homomorphism
+
+

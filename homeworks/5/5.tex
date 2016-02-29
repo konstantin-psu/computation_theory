@@ -128,6 +128,9 @@
 
 \renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
 \newcommand{\answ}[1]{\hspace{1cm}\textbf{Answ:} #1}
+
+%\newcommand{\domino}[2]{\left [ \cfrac{#1}{#2} \right ]}
+\newcommand{\domino}[2]{\cfrac{#1}{#2}}
 \newcommand{\problem}[1]{\large{\textbf{Problem #1}}\\}
 
 %
@@ -183,34 +186,195 @@ If $A \leq _m B$ and B is a regular language, does that imply that A is a regula
 
 No it doesn't imply that A is regular, for example: $\curl{a^nb^n\ | \ n \geq 0}$ can be reduced to $\curl{a^n}\ |\ n \geq 0$, by 
 following procedure:
-Check if input $\in a^n,b^n$, output $a^n$ it is, and $b$ if is is not. \\
+Check if input $\in a^n,b^n$, output $a^n$ it is, and $b$ if is not. \\
 
 Description of the TM form problems 1 and 2.\\
 \begin{enumerate}[1., leftmargin = 0.5cm]
 \itemsep0em
 \item $Q = \curl{A,B,C,D}$
 \item $\Sigma = \curl{0,1}$
-\item $\Gamma = \curl{0,1,_}$
+\item $\Gamma = \curl{0,1,\_}$
 \item $\delta = $
     \begin{enumerate}[1., leftmargin = 0.5cm]
     \itemsep0em
     \item $\delta (A,0) = (B,1,R)$
     \item $\delta (A,1) = (A,1,R)$
-    \item $\delta (A,_) = (C,_,L)$
+    \item $\delta (A,\_) = (C,\_,L)$
 
     \item $\delta (B,0) = (D,0,L)$
     \item $\delta (B,1) = (A,0,R)$
-    \item $\delta (B,_) = (D,_,L)$
+    \item $\delta (B,\_) = (D,\_,L)$
     \end{enumerate}
 \item $q_0$ = A
 \item  $q_{accept} = C$
-\item  $q_{reject} = d$
+\item  $q_{reject} = D$
 \end{enumerate}
 
 \problem{1} \\
 Convert this into and instance of the PCP.
 
+\textbf{Solution} \\
+Convert the TM into instance of PCP by adding required domino tiles:
+
+Part 1: add first tile\\ \\
+%$\domino{\#}{\#Aw_1w_2w_3...\#}$
+$\domino{\#}{\#\#Aw_1w_2w_3...}$ \\
+
+Part 2: Take care of the right transitions\\ \\
+$\domino{A0}{1B}$ 
+$\domino{A1}{1A}$ 
+$\domino{B1}{0A}$  \\
+
+Part 3: Take care of the left transitions\\ \\ 
+%$\domino{\#qa}{\#rb}$ 
+%$\domino{qa}{br}$ 
+$\domino{0A\_}{C0\_}$
+$\domino{1A\_}{C1\_}$
+$\domino{\_A\_}{C\_\_}$
+$\domino{0B0}{D00}$
+$\domino{1B0}{D10}$
+$\domino{\_B0}{D\_0}$ 
+$\domino{0B\_}{D0\_}$
+$\domino{1B\_}{D1\_}$
+$\domino{\_B\_}{D\_\_}$
+
+$\domino{\#A\_}{\_\#C\_}$ 
+$\domino{\#B0}{\_\#D0}$ 
+$\domino{\#B\_}{\_\#D\_}$\\
+
+Part 4: For every $a \in \Gamma$ put $\domino{a}{a}$\\
+$\domino{0}{0}$ 
+$\domino{1}{1}$ 
+$\domino{\_}{\_}$ \\
+
+Part5\\ \\
+$\domino{\#}{\#}$
+$\domino{\#}{\_\#}$ \\
+
+
+Part 6: Accept states\\ \\
+$\domino{0C}{C}$ 
+$\domino{1C}{C}$ 
+$\domino{\_C}{C}$
+$\domino{C0}{C}$ 
+$\domino{C1}{C}$ 
+$\domino{C\_}{C}$ \\
+
+Part7: Final domino\\ \\
+$\domino{C\#\#}{\#}$ \\
+
+\pagebreak
+
 \problem{2} \\
 Show that the string "01" is in the language recognized by this TM by showing a solution to your instance of the PCP.
 
+\textbf{Solution} \\ \\
+\begin{adjustbox}{width=1.0\textwidth,center}
+$\domino{\#}{\#\#A01}$ \\
+$\domino{\#}{\#}$
+$\domino{A0}{1B}$
+$\domino{1}{1}$
+$\domino{\#}{\#}$
+$\domino{1}{1}$
+$\domino{B1}{0A}$
+$\domino{\#}{\#}$
+$\domino{1}{1}$
+$\domino{0A\_}{C0\_}$
+$\domino{\#}{\#}$
+$\domino{1}{1}$
+$\domino{C0}{C}$ 
+$\domino{\#}{\#}$
+$\domino{1C}{C}$ 
+$\domino{\#}{\#}$
+$\domino{C\#\#}{\#}$ \\
+\end{adjustbox}
+
+\vspace{1cm}
+
+\begin{adjustbox}{width=1.1\textwidth,center}
+$\domino{\#}{\#\#A01\_}$ \\
+$\domino{\#}{\#}$
+$\domino{A0}{1B}$
+$\domino{1}{1}$
+$\domino{\_}{\_}$
+$\domino{\#}{\#}$
+$\domino{1}{1}$
+$\domino{B1}{0A}$
+$\domino{\_}{\_}$
+$\domino{\#}{\#}$
+$\domino{1}{1}$
+$\domino{0A\_}{C0\_}$
+$\domino{\#}{\#}$
+$\domino{1}{1}$
+$\domino{C0}{C}$ 
+$\domino{\_}{\_}$
+$\domino{\#}{\#}$
+$\domino{1C}{C}$ 
+$\domino{\_}{\_}$
+$\domino{\#}{\#}$
+$\domino{C\_}{C}$
+$\domino{\#}{\#}$
+$\domino{C\#\#}{\#}$ \\
+\end{adjustbox}
+
+
+%\begin{adjustbox}{width=1.2\textwidth,center}
+%$\domino{\#}{\#A01\#}$ 
+%$\domino{A0}{1B}$
+%$\domino{1}{1}$
+%$\domino{\#}{\#}$
+%$\domino{1}{1}$
+%$\domino{B1}{0A}$
+%$\domino{\#}{\#}$
+%$\domino{1}{1}$
+%$\domino{0A\_}{C0\_}$
+%$\domino{\#}{\#}$
+%$\domino{1}{1}$
+%$\domino{C0}{C}$ 
+%$\domino{\#}{\#}$
+%$\domino{1C}{C}$ 
+%$\domino{\#}{\#}$
+%$\domino{C\_}{C}$ \\
+%$\domino{\#}{\#}$
+%$\domino{C\#\#}{\#}$ \\
+%\end{adjustbox}
+
+
+
+%\begin{adjustbox}{width=1.2\textwidth,center}
+%$\domino{\#}{\#A01\_\#}$ 
+%$\domino{A0}{1B}$
+%$\domino{1}{1}$
+%$\domino{\_}{\_}$
+%$\domino{\#}{\#}$
+%$\domino{1}{1}$
+%$\domino{B1}{0A}$
+%$\domino{\_}{\_}$
+%$\domino{\#}{\#}$
+%$\domino{1}{1}$
+%$\domino{0A\_}{C0\_}$
+%$\domino{\#}{\#}$
+%$\domino{1}{1}$
+%$\domino{C0}{C}$ 
+%$\domino{\_}{\_}$
+%$\domino{\#}{\#}$
+%$\domino{1C}{C}$ 
+%$\domino{\_}{\_}$
+%$\domino{\#}{\#}$
+%$\domino{C\_}{C}$ \\
+%$\domino{\#}{\#}$
+%$\domino{C\#\#}{\#}$ \\
+%\end{adjustbox}
+%$\domino{\#}{\#A01\#}$ 
+%$\domino{\#}{\#}$
+%$\domino{A0}{1B}$
+%$\domino{1}{1}$
+%$\domino{\#}{\#}$
+%$\domino{1}{1}$
+%$\domino{B1}{0A}$
+%$\domino{\#}{\#}$
+%$\domino{1}{1}$
+%$\domino{1A\_}{C1\_}$
+%$\domino{C\#\#}{\#}$ \\
+%$\domino{\#A\_}{\#C\_}$ 
 \end{document}

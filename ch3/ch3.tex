@@ -1,0 +1,247 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{wrapfig}
+\usepackage{extramarks}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage{forest,adjustbox}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}                     
+          \setlist[enumerate, 1]{1\textsuperscript{o}}
+
+
+
+\usepackage{listings}
+\usepackage{xcolor}
+%\lstset { %
+%  language=C++,
+%  backgroundcolor=\color{black!5}, % set backgroundcolor
+%  basicstyle=\footnotesize,% basic font setting
+%}
+
+%\usetikzlibrary{automata,positioning}
+\usetikzlibrary{positioning,shapes,shadows,arrows,automata} %
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkClass}
+\chead{ (\hmwkClassInstructor\ \hmwkClassTime) }
+\rhead{\shortName \hspace{0.4cm} \hmwkTitle}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\newcommand\curl[1]{\{#1\}}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+  \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+  \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+  \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+  \stepcounter{#1}
+  \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+  \ifnum#1>0
+    \setcounter{homeworkProblemCounter}{#1}
+  \fi
+  \section{Problem \arabic{homeworkProblemCounter}}
+  \setcounter{partCounter}{1}
+  \enterProblemHeader{homeworkProblemCounter}
+}{
+  \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%  - Title
+%  - Due date
+%  - Class
+%  - Section/Time
+%  - Instructor
+%  - Author
+%
+
+\newcommand{\hmwkTitle}{Chapter 3 review}
+\newcommand{\hmwkDueDate}{February 22 2016}
+\newcommand{\hmwkClass}{CS581 Theory of Computation}
+\newcommand{\hmwkClassTime}{Winter 2016}
+\newcommand{\hmwkClassInstructor}{Harry H. Porter}
+\newcommand{\hmwkAuthorName}{Konstantin Macarenco}
+\newcommand{\shortName}{Konstantin M.}
+
+%
+% Title Page
+%
+
+\title{
+  \vspace{2in}
+  \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+  \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 2:00pm}\\
+  \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+  \vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+\newcommand{\answ}[1]{\hspace{1cm}\textbf{Answ:} #1}
+\newcommand{\problem}[1]{\large{\textbf{Problem #1}}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\newcommand\Vtextvisiblespace[1][.3em]{%
+  \mbox{\kern.06em\vrule height.3ex}%
+  \vbox{\hrule width#1}%
+  \hbox{\vrule height.3ex}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{enumerate}[1., leftmargin = 0.5cm]
+\itemsep0em
+    \item Turing recognizable languages - are recognized by some TM.
+    \item Turing decidable languages - are decided by some TM.
+    \item Turing Machine
+    \item Halt and accept - whenever the machine enters the accept state computation immediately halts.
+    \item Halt and reject - whenever the machine enters the reject state computation immediately halts.
+    \item If an edge is missing assume it leads to reject.
+    
+        \begin{enumerate}[1., leftmargin = 0.5cm]
+        \itemsep0em
+        \item $Q$ set of states
+        \item $\Sigma$ input alphabet, empty symbol is not a part of $\Sigma$
+        \item $\Gamma$ stack alphabet, where $\Sigma \subseteq \Gamma$ and blank $\in \Gamma$
+        \item $\delta : Q \times \Gamma \rightarrow Q \times \Gamma \times \curl{R,L}$
+        \item $q_{start} \in Q$
+        \item $q_{reject} \in Q$
+        \item $q_{accept} \in Q$, where $q_{accept} \ne q_{reject}$
+        \end{enumerate}
+    \item Multitape Turing Machine
+        \begin{enumerate}[1., leftmargin = 0.5cm]
+        \itemsep0em
+        \item $Q$ set of states
+        \item $\Sigma^k$ input alphabets, empty symbol is not a part of $\Sigma^k$
+        \item $\Gamma^k$ stack alphabets, where $\Sigma^k \subseteq \Gamma^k$ and blank $\in \Gamma^k$
+        \item $\delta : Q \times \Gamma^k \rightarrow Q \times \Gamma^k \times \curl{R,L,S}$
+        \item $q_{start} \in Q$
+        \item $q_{reject} \in Q$
+        \item $q_{accept} \in Q$, where $q_{accept} \ne q_{reject}$
+        \end{enumerate}
+
+    \item Non-deterministic Turing Machine - accept if at least one branch accepts. Reject if all branches rejects.
+        \begin{enumerate}[1., leftmargin = 0.5cm]
+        \itemsep0em
+        \item $Q$ set of states
+        \item $\Sigma$ input alphabets, empty symbol is not a part of $\Sigma$
+        \item $\Gamma$ stack alphabets, where $\Sigma \subseteq \Gamma$ and blank $\in \Gamma$
+        \item $\delta : Q \times \Gamma \rightarrow P \curl{Q \times \Gamma \times \curl{R,L}}$
+        \item $q_{start} \in Q$
+        \item $q_{reject} \in Q$
+        \item $q_{accept} \in Q$, where $q_{accept} \ne q_{reject}$
+        \end{enumerate}
+
+    \item Enumerator \\
+        A language is Turing recognizable if some enumerator enumerates it.
+        \begin{enumerate}[1., leftmargin = 0.5cm]
+        \itemsep0em
+        \item $Q$ set of states
+        \item $\Sigma$ input alphabets, empty symbol is not a part of $\Sigma$
+        \item $\Gamma$ stack alphabets, where $\Sigma \subseteq \Gamma$ and blank $\in \Gamma$
+        \item $\delta : Q \times \Gamma \rightarrow Q \times \Gamma \times \curl{R,L} \times \Sigma_{\epsilon}$
+        \item $q_{start} \in Q$
+        \item $q_{print} \in Q$
+        \item $q_{accept} \in Q$, where $q_{accept} \ne q_{print}$
+        \end{enumerate}
+    
+    \item All turing machine modules have equivalent computing power.
+
+    \item Decidable languages: When given an input the TM will always halt. The TM will ACCEPT if it is in L.
+        The TM will REJECT if it is not in L.
+
+    \item Turing recognizable language. When given an input, string in the language. The TM will always HALT and ACCEPT.
+    OR if the string is not in the lanhuage the TM will either REJECT or LOOP. \\   
+        Also recursively enumerable, partially decidable (same as Turing Recognizable).
+    
+    \item Some languages are not Turing recogniziable (RE, PD)
+    
+    \item Turing-Church Thesis "Anything Computable == Computable By a TM"
+
+    \item A "Configuration" is a way to represent the entire state of a TM at one moment during computation.
+
+    \item Algorithm definition: Algorithm = Turing Machine \\
+        High-Level specification - PSEUDO CODE \\
+        Implementation specification - Contents of the tape, data representation, motion of the head. More Detail but still abstract.\\
+        TM. Specification - Formal Descritpion, FULLY DETAILED (lowest level)
+    
+\end{enumerate}
+
+\end{document}
