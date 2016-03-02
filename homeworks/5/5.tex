@@ -129,8 +129,8 @@
 \renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
 \newcommand{\answ}[1]{\hspace{1cm}\textbf{Answ:} #1}
 
-%\newcommand{\domino}[2]{\left [ \cfrac{#1}{#2} \right ]}
-\newcommand{\domino}[2]{\cfrac{#1}{#2}}
+\newcommand{\domino}[2]{\left [ \cfrac{#1}{#2} \right ]}
+\newcommand{\tile}[2]{\cfrac{#1}{#2}}
 \newcommand{\problem}[1]{\large{\textbf{Problem #1}}\\}
 
 %
@@ -176,7 +176,8 @@ $\left \{ \left [ \cfrac{ab}{abab} \right ], \left [ \cfrac{b}{a} \right ], \lef
 
 \textbf{Solution}\\
 
-$  \cfrac{ab}{abab}  , \cfrac{ab}{abab}, \cfrac{aba}{b} , \cfrac{b}{a} , \cfrac{b}{a} ,   \cfrac{aa}{a}, \cfrac{aa}{a}  $  \\
+$\cfrac{ab}{abab}  , \cfrac{ab}{abab}, \cfrac{aba}{b} , \cfrac{b}{a} , \cfrac{b}{a} ,   \cfrac{aa}{a}, \cfrac{aa}{a}  $  or
+$\cfrac{aa}{a}, \cfrac{aa}{a}, \cfrac{b}{a},\cfrac{ab}{abab}$  \\
 
 \problem{5.4} \\
 
@@ -184,11 +185,13 @@ If $A \leq _m B$ and B is a regular language, does that imply that A is a regula
 
 \textbf{Solution}\\
 
-No it doesn't imply that A is regular, for example: $\curl{a^nb^n\ | \ n \geq 0}$ can be reduced to $\curl{a^n}\ |\ n \geq 0$, by 
+No it doesn't imply that A is regular, for example: CFL $\curl{a^nb^n\ | \ n \geq 0}$ can be reduced to regular language $\curl{a^n\ |\ n \geq 0}$, by 
 following procedure:
-Check if input $\in a^n,b^n$, output $a^n$ it is, and $b$ if is not. \\
+check if input $\in a^n b^n$, output $a^n$ if it is, and $b$ if it is not. 
+\\
 
-Description of the TM form problems 1 and 2.\\
+
+\textbf{Description of the TM form problems 1 and 2.}\\
 \begin{enumerate}[1., leftmargin = 0.5cm]
 \itemsep0em
 \item $Q = \curl{A,B,C,D}$
@@ -263,61 +266,70 @@ $\domino{C\_}{C}$ \\
 Part7: Final domino\\ \\
 $\domino{C\#\#}{\#}$ \\
 
+So far we converted the TM into MPCP, usually this this would require further conversion into instance of PCP, by 
+addition of $\cfrac{\star t_1}{\star b_1 \star} $ to the first title, and  $\cfrac{\star t_1}{b_1 \star} $ to all the 
+rest to enforce the order of computation, however this procedure was omitted for briefness.
+
 \pagebreak
 
 \problem{2} \\
-Show that the string "01" is in the language recognized by this TM by showing a solution to your instance of the PCP.
+Show that the string "01" is in the language recognized by this TM by showing a solution to your instance of the PCP.\\
 
-\textbf{Solution} \\ \\
-\begin{adjustbox}{width=1.0\textwidth,center}
-$\domino{\#}{\#\#A01}$ \\
-$\domino{\#}{\#}$
-$\domino{A0}{1B}$
-$\domino{1}{1}$
-$\domino{\#}{\#}$
-$\domino{1}{1}$
-$\domino{B1}{0A}$
-$\domino{\#}{\#}$
-$\domino{1}{1}$
-$\domino{0A\_}{C0\_}$
-$\domino{\#}{\#}$
-$\domino{1}{1}$
-$\domino{C0}{C}$ 
-$\domino{\#}{\#}$
-$\domino{1C}{C}$ 
-$\domino{\#}{\#}$
-$\domino{C\#\#}{\#}$ \\
+\textbf{Solution} \\
+We find a match in PCP instance.
+%\begin{adjustbox}{width=1.0\textwidth,center}
+%$\domino{\#}{\#\#A01}$ \\
+%$\domino{\#}{\#}$
+%$\domino{A0}{1B}$
+%$\domino{1}{1}$
+%$\domino{\#}{\#}$
+%$\domino{1}{1}$
+%$\domino{B1}{0A}$
+%$\domino{\#}{\#}$
+%$\domino{1}{1}$
+%$\domino{0A\_}{C0\_}$
+%$\domino{\#}{\#}$
+%$\domino{1}{1}$
+%$\domino{C0}{C}$ 
+%$\domino{\#}{\#}$
+%$\domino{1C}{C}$ 
+%$\domino{\#}{\#}$
+%$\domino{C\#\#}{\#}$ \\
+%\end{adjustbox}
+%
+\vspace{1cm}
+
+\begin{adjustbox}{width=1\textwidth,center}
+$\tile{\#}{\#\#A01\_}$ \\
+$\tile{\#}{\#}$
+$\tile{A0}{1B}$
+$\tile{1}{1}$
+$\tile{\_}{\_}$
+$\tile{\#}{\#}$
+$\tile{1}{1}$
+$\tile{B1}{0A}$
+$\tile{\_}{\_}$
+$\tile{\#}{\#}$
+$\tile{1}{1}$
+$\tile{0A\_}{C0\_}$
+$\tile{\#}{\#}$
+$\tile{1}{1}$
+$\tile{C0}{C}$ 
+$\tile{\_}{\_}$
+$\tile{\#}{\#}$
+$\tile{1C}{C}$ 
+$\tile{\_}{\_}$
+$\tile{\#}{\#}$
+$\tile{C\_}{C}$
+$\tile{\#}{\#}$
+$\tile{C\#\#}{\#}$
 \end{adjustbox}
 
 \vspace{1cm}
 
-\begin{adjustbox}{width=1.1\textwidth,center}
-$\domino{\#}{\#\#A01\_}$ \\
-$\domino{\#}{\#}$
-$\domino{A0}{1B}$
-$\domino{1}{1}$
-$\domino{\_}{\_}$
-$\domino{\#}{\#}$
-$\domino{1}{1}$
-$\domino{B1}{0A}$
-$\domino{\_}{\_}$
-$\domino{\#}{\#}$
-$\domino{1}{1}$
-$\domino{0A\_}{C0\_}$
-$\domino{\#}{\#}$
-$\domino{1}{1}$
-$\domino{C0}{C}$ 
-$\domino{\_}{\_}$
-$\domino{\#}{\#}$
-$\domino{1C}{C}$ 
-$\domino{\_}{\_}$
-$\domino{\#}{\#}$
-$\domino{C\_}{C}$
-$\domino{\#}{\#}$
-$\domino{C\#\#}{\#}$ \\
-\end{adjustbox}
+Resulting PCP: \\
 
-
+$\cfrac{\#\#A01\_\#1B1\_\#10A\_\#1C0\_\#1C\_\#C\_\#C\#\#}{\#\#A01\_\#1B1\_\#10A\_\#1C0\_\#1C\_\#C\_\#C\#\#}$
 %\begin{adjustbox}{width=1.2\textwidth,center}
 %$\domino{\#}{\#A01\#}$ 
 %$\domino{A0}{1B}$
