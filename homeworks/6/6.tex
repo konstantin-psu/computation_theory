@@ -1,0 +1,299 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{wrapfig}
+\usepackage{extramarks}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage{forest,adjustbox}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}                     
+          \setlist[enumerate, 1]{1\textsuperscript{o}}
+
+
+
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset { %
+    language=python,
+    frame=single,
+    showstringspaces=false,
+    backgroundcolor=\color{black!5}, % set backgroundcolor
+    basicstyle=\footnotesize,% basic font setting
+}
+
+%\usetikzlibrary{automata,positioning}
+\usetikzlibrary{positioning,shapes,shadows,arrows,automata} %
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkClass}
+\chead{ (\hmwkClassInstructor\ \hmwkClassTime) }
+\rhead{\shortName \hspace{0.4cm} \hmwkTitle}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\newcommand\curl[1]{\{#1\}}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+  \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+  \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+  \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+  \stepcounter{#1}
+  \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+  \ifnum#1>0
+    \setcounter{homeworkProblemCounter}{#1}
+  \fi
+  \section{Problem \arabic{homeworkProblemCounter}}
+  \setcounter{partCounter}{1}
+  \enterProblemHeader{homeworkProblemCounter}
+}{
+  \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%  - Title
+%  - Due date
+%  - Class
+%  - Section/Time
+%  - Instructor
+%  - Author
+%
+
+\newcommand{\hmwkTitle}{Homework\ \#6}
+\newcommand{\hmwkDueDate}{March 16 2016}
+\newcommand{\hmwkClass}{CS581 Theory of Computation}
+\newcommand{\hmwkClassTime}{Winter 2016}
+\newcommand{\hmwkClassInstructor}{Harry H. Porter}
+\newcommand{\hmwkAuthorName}{Konstantin Macarenco}
+\newcommand{\shortName}{Konstantin M.}
+
+%
+% Title Page
+%
+
+\title{
+  \vspace{2in}
+  \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+  \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 12:30pm}\\
+  \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+  \vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+\newcommand{\answ}[1]{\hspace{1cm}\textbf{Answ:} #1}
+
+\newcommand{\domino}[2]{\left [ \cfrac{#1}{#2} \right ]}
+\newcommand{\tile}[2]{\cfrac{#1}{#2}}
+\newcommand{\problem}[1]{\large{\textbf{Problem #1}}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\newcommand\Vtextvisiblespace[1][.3em]{%
+  \mbox{\kern.06em\vrule height.3ex}%
+  \vbox{\hrule width#1}%
+  \hbox{\vrule height.3ex}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\problem{6.1}
+
+Give an example in the spirit of the recursion theorem of a program in a real programming 
+language (or a reasonable approximation thereof) that prints itself out.\\
+
+\textbf{Solution in python:}
+
+\begin{lstlisting}
+x = r"%sprint ('x = r\"' + x) %% (x + '\"\n')"
+print ('x = r\"' + x) % (x + '\"\n')
+\end{lstlisting}
+
+\vspace{2cm}
+
+\problem{6.11}
+
+Let  $\phi_{eq}$ be defined as in Problem 6.10. Give a model of the sentence
+\begin{align}
+    \phi_{lt} &= \phi_{eq} \\
+    &\wedge \forall x,y [R_1(x,y) \rightarrow \neg R_2(x,y)] \\
+    &\wedge \forall x,y [\neg R_1(x,y) \rightarrow (R_2(x,y) \oplus R_2(x,z))] \\
+    &\wedge \forall x,y,z [(R_2(x,y) \wedge R_2(y,z)) \rightarrow R_2(x,z)]\\
+    &\wedge \forall x \exists y [$_2(x,y)].
+\end{align}
+
+\textbf{Solution}\\
+
+One model is $(N,R_1,R_2,\oplus)$, where $R_1$ is equality, $R_2$ is $ < $ and $\oplus $ is $\vee$.
+% Solution for 6.10
+%The statement $\phi_{eq}$ gives the three conditions of an equivalence relation. A model
+%(A,R_1), where A is any universe and R_1 is any equivalence relation over A, is a model of 
+%$\phi_{eq}$. For example, let A be the integers $Z$ and let $R_1 = \curl{(i,i) | i \in Z}$.
+
+\vspace{2cm}
+
+\problem{7.1}
+Answer each part TRUE or FALSE.
+
+    \begin{table}[h!]
+    \centering
+    \begin{tabular}{lll}
+       a. & $2n = O(n)$             & \textbf{TRUE}  \\
+       b. & $n^2 = O(n)$            & \textbf{FALSE} \\
+       c. & $n^2 = O(n \  log^2n) $ & \textbf{FALSE} \\
+       d. & $n\ log n = O(n^2)$     & \textbf{TRUE}  \\
+       e. & $3^n = 2^{O(n)}$        & \textbf{TRUE}  \\
+       f. & $2^{2^n} = O(2^{2^n})$  & \textbf{TRUE} 
+    \end{tabular}
+    \end{table}
+
+\pagebreak
+
+\problem{7.4}
+Fill out the table described in the polynomial time algorithm for context-free language
+recognition from theorem 7.16 for string $w = baba$ and CFG G:\\
+    \begin{table}[h!]
+    \centering
+    \begin{tabular}{lll}
+     $S$     & $\rightarrow$ &  $RT    $ \\
+     $R$     & $\rightarrow$ &  $TR | a$ \\
+     $T$     & $\rightarrow$ &  $TR | b$
+    \end{tabular}
+    \end{table}
+
+\textbf{Solution}\\
+
+    \begin{table}[h!]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|} \hline
+         & 1 & 2   & 3 & 4 \\ \hline
+       1 & T & T,R & S & S,R,T \\ \hline
+       2 &   & R   & S & S \\ \hline
+       3 &   &     & T & T,R \\ \hline
+       4 &   &     &   & R \\ \hline
+    \end{tabular}
+    \end{table}
+
+    Because table(1,4) contains S, the TM accepts $w$. \\
+
+\vspace{2cm}
+\problem{7.5}
+    Is the following formula satisfiable? \\ 
+
+    \begin{centering}
+    $(x \vee y) \wedge (x \vee \overline{y}) \wedge (\overline{x} \vee y) \wedge (\overline{x} \vee \overline{y})$ \\
+    \end{centering}
+
+
+\textbf{Solution}\\
+
+    \begin{table}[h!]
+    \centering
+    \begin{tabular}{cc|c|c|c|c|c}
+    x & y & $(x \vee y)$ & $(x \vee \overline{y})$  & $(\overline{x} \vee y)$ & $(\overline{x} \vee \overline{y})$ & Result (conjunction of all) \\ \hline
+    T & T &     T        &    T                     &    T                    &  F      &  F\\
+    T & F &     T        &    T                     &    F                    &  T      &  F\\
+    F & T &     T        &    F                     &    T                    &  T      &  F\\
+    F & F &     F        &    T                     &    T                    &  T      &  F\\
+    \end{tabular}
+    \end{table}
+
+    Hence the formula is not satisfiable.
+
+\pagebreak
+
+\problem{7.12}
+Call graphs G and H \textbf{isomorphic} if the nodes of G may be reordered so that it is identical to H. 
+Let $ISO = \curl{\langle G, H \rangle | G \text{ and } H \text{ are isomorphic graphs}}$. Show that
+$ISO \in NP$ \\
+
+\textbf{Solution}\\
+
+A nondeterministic polynomial time algorithm for $ISO$ operates as follows:\\
+`` On input $\langle G, H \rangle$ where $G$ and $H$ are undirected graphs:
+    \begin{enumerate}[1., leftmargin = 0.6cm]
+    \itemsep0em
+    \item  Let $m$ be the number of nodes of $G$ and $H$. If they don't have the same number of nodes, $reject$.
+    \item Nondeterministically select a premutation $\pi$ of $m$ elemnts.
+    \item For each pair of nodes $x$ and $y$ of $G$ check that (x,y) is an edge of $G$ iff $(\pi(x), \pi(y))$
+        is an edge of $H$. If all agree, $accept$. If any differ, $reject$.''
+    \end{enumerate}
+
+    Stage 2 can be implemented in polynomial time nondeterministically, Stage 3 takes polynomial time.
+    Therefore $ISO \in NP$
+ 
+\end{document}

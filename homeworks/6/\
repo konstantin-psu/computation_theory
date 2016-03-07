@@ -1,0 +1,200 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{wrapfig}
+\usepackage{extramarks}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage{forest,adjustbox}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}                     
+          \setlist[enumerate, 1]{1\textsuperscript{o}}
+
+
+
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset { %
+    language=python,
+    frame=single,
+    showstringspaces=false,
+    backgroundcolor=\color{black!5}, % set backgroundcolor
+    basicstyle=\footnotesize,% basic font setting
+}
+
+%\usetikzlibrary{automata,positioning}
+\usetikzlibrary{positioning,shapes,shadows,arrows,automata} %
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkClass}
+\chead{ (\hmwkClassInstructor\ \hmwkClassTime) }
+\rhead{\shortName \hspace{0.4cm} \hmwkTitle}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\newcommand\curl[1]{\{#1\}}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+  \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+  \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+  \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+  \stepcounter{#1}
+  \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+  \ifnum#1>0
+    \setcounter{homeworkProblemCounter}{#1}
+  \fi
+  \section{Problem \arabic{homeworkProblemCounter}}
+  \setcounter{partCounter}{1}
+  \enterProblemHeader{homeworkProblemCounter}
+}{
+  \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%  - Title
+%  - Due date
+%  - Class
+%  - Section/Time
+%  - Instructor
+%  - Author
+%
+
+\newcommand{\hmwkTitle}{Homework\ \#5}
+\newcommand{\hmwkDueDate}{March 2 2016}
+\newcommand{\hmwkClass}{CS581 Theory of Computation}
+\newcommand{\hmwkClassTime}{Winter 2016}
+\newcommand{\hmwkClassInstructor}{Harry H. Porter}
+\newcommand{\hmwkAuthorName}{Konstantin Macarenco}
+\newcommand{\shortName}{Konstantin M.}
+
+%
+% Title Page
+%
+
+\title{
+  \vspace{2in}
+  \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+  \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 2:00pm}\\
+  \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+  \vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+\newcommand{\answ}[1]{\hspace{1cm}\textbf{Answ:} #1}
+
+\newcommand{\domino}[2]{\left [ \cfrac{#1}{#2} \right ]}
+\newcommand{\tile}[2]{\cfrac{#1}{#2}}
+\newcommand{\problem}[1]{\large{\textbf{Problem #1}}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\newcommand\Vtextvisiblespace[1][.3em]{%
+  \mbox{\kern.06em\vrule height.3ex}%
+  \vbox{\hrule width#1}%
+  \hbox{\vrule height.3ex}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\problem{6.1}
+
+Give an example in the spirit of t he recursion theorem of a program in a real programming 
+language (or a reasonable approximation thereof) that prints itself out.\\
+
+\textbf{Solution in python:}
+
+\begin{lstlisting}
+x = r"%sprint ('x = r\"' + x) %% (x + '\"\n')"
+print ('x = r\"' + x) % (x + '\"\n')
+\end{lstlisting}
+
+\hspace{1cm}
+
+\problem{6.11}
+
+Let  $\phi_{eq}$ be defined as in Problem 6.10. Give a model of the sentence
+\begin{align}
+    \phi_{eq} &= \\
+    &\wedge \forall x,y [R_1(x,y) \rightarrow \neg R_2(x,y)] \\
+    &\wedge \forall x,y [\neg R_1(x,y) \rightarrow (R_2(x,y) \oplus R_2(x,z))] \\
+    &\wedge \forall x,y,z [(R_2(x,y) \wedge R_2(y,z)) \rightarrow R_2(x,z)]\\
+    &\wedge \forall x \esixts y [$_2(x,y)].
+\end{align}
+
+\textbf{Solution}\\
+\end{document}
