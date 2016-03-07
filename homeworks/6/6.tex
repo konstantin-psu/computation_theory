@@ -288,7 +288,7 @@ A nondeterministic polynomial time algorithm for $ISO$ operates as follows:\\
     \begin{enumerate}[1., leftmargin = 0.6cm]
     \itemsep0em
     \item  Let $m$ be the number of nodes of $G$ and $H$. If they don't have the same number of nodes, $reject$.
-    \item Nondeterministically select a premutation $\pi$ of $m$ elemnts.
+    \item Nondeterministically select a permutation $\pi$ of $m$ elements.
     \item For each pair of nodes $x$ and $y$ of $G$ check that (x,y) is an edge of $G$ iff $(\pi(x), \pi(y))$
         is an edge of $H$. If all agree, $accept$. If any differ, $reject$.''
     \end{enumerate}
