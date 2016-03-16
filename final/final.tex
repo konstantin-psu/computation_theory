@@ -1,0 +1,350 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{wrapfig}
+\usepackage{extramarks}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage{forest,adjustbox}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}                     
+          \setlist[enumerate, 1]{1\textsuperscript{o}}
+
+
+
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset { %
+    language=python,
+    frame=single,
+    showstringspaces=false,
+    backgroundcolor=\color{black!5}, % set backgroundcolor
+    basicstyle=\footnotesize,% basic font setting
+}
+
+%\usetikzlibrary{automata,positioning}
+\usetikzlibrary{positioning,shapes,shadows,arrows,automata} % % Basic Document Settings %
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkClass}
+\chead{ (\hmwkClassInstructor\ \hmwkClassTime) }
+\rhead{\shortName \hspace{0.4cm} \hmwkTitle}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\newcommand\curl[1]{\{#1\}}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+  \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+  \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+  \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+  \stepcounter{#1}
+  \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+  \ifnum#1>0
+    \setcounter{homeworkProblemCounter}{#1}
+  \fi
+  \section{Problem \arabic{homeworkProblemCounter}}
+  \setcounter{partCounter}{1}
+  \enterProblemHeader{homeworkProblemCounter}
+}{
+  \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%  - Title
+%  - Due date
+%  - Class
+%  - Section/Time
+%  - Instructor
+%  - Author
+%
+
+\newcommand{\hmwkTitle}{Homework\ \#6}
+\newcommand{\hmwkDueDate}{March 16 2016}
+\newcommand{\hmwkClass}{CS581 Theory of Computation}
+\newcommand{\hmwkClassTime}{Winter 2016}
+\newcommand{\hmwkClassInstructor}{Harry H. Porter}
+\newcommand{\hmwkAuthorName}{Konstantin Macarenco}
+\newcommand{\shortName}{Konstantin M.}
+
+%
+% Title Page
+%
+
+\title{
+  \vspace{2in}
+  \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+  \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 12:30pm}\\
+  \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+  \vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+\newcommand{\answ}[1]{\hspace{1cm}\textbf{Answ:} #1}
+
+\newcommand{\domino}[2]{\left [ \cfrac{#1}{#2} \right ]}
+\newcommand{\tile}[2]{\cfrac{#1}{#2}}
+\newcommand{\problem}[1]{\large{\textbf{Problem #1}}\\}
+\newcommand{\imp}[1]{\textbf{#1}}
+\newcommand{\nth}{$ Th(N,+,\times) $}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\newcommand\Vtextvisiblespace[1][.3em]{%
+  \mbox{\kern.06em\vrule height.3ex}%
+  \vbox{\hrule width#1}%
+  \hbox{\vrule height.3ex}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\textbf{Chapter 6.2 Decidability of logical theories}
+
+\begin{enumerate}[1., leftmargin = 0.6cm]
+\itemsep0em
+\item Well formed formula\\
+    A formula is a well-formed string over this 
+    \begin{enumerate}[1., leftmargin = 0.6cm]
+    \itemsep0em
+        \item is an atomic formula
+        \item has the form $\phi \wedge \phi$ or $\phi \vee \phi$ or $\neg \phi$ and $\phi$ are 
+            smaller formulas, or
+        \item has the form $\exists x_i [\phi_1] or \forall x_i[\phi_1]$ where $\phi_1$ is a
+            smaller formula.
+    \end{enumerate}
+    \item prenex normal form - all quantifiers apper in the front of the formula.
+    \item a variable isn't bound withing the scope of a quantifier is called a free variable
+    \item formula with no free variables is called a sentence of statement.
+    \item \textbf{universe} with  assignment of relations to relation symbols is called a \textbf{model}
+
+    \item if $M$ is a model we let the  \imp{theory\ of \ M}, written $Th(M)$, be the collection of
+        true sentence in the language of that model
+
+    \item \imp{A DECIDABLE THEORY}
+    \item Tuatology always true in \underline{any} model
+    \item Axioms a given set of statements assumed to be true without proof.
+    \teim Rules of inference/deduction
+
+        
+    \item \imp{Kurt Godel} showed that no algorithm can decide in general whether statements in number theory are true or false.
+        \item \imp{Church showed that } $Th(N,+,x)$ is undecidable. (Proof idea :
+            reduce Atm to the problem of deciding number theory).
+        \item $Th(N,+)$ is decidable
+    \item The set of provable statements in number theory is Turing Recognizable
+        
+        we can enumerate all the provable statements. (List them all out)
+    \item Some statements are true but not provable!
+        
+    Some statements in  \nth has no proof.
+        
+    Assume all true statements are provable, Look for a proof of $\phi\ and\ \neg\phi
+        $one of then will be true\\
+        But \nth is undecidable, hence contradiction!
+\end{enumerate}
+
+\textbf{Chapter 7 TIME COMPLEXITY}
+\begin{enumerate}[1., leftmargin = 0.6cm]
+\itemsep0em
+\item  Measuring the complexity
+\item let M be a deteministic Turing machine that halts on all inputs. The \imp{running
+    time} or \imp{time complexity} of M is the function $f: N \rightarrow N$, where
+    $f(n)$ is the runnging time of M, we say that M runs in time $f(n)$ and that M is
+    an $f(n)$ time Turing machine. Customarily we use n to represent the lenght of the 
+    input.
+\item \imp{BIG O and SMALL O}
+\item Let $f$ and $g$ be functions $f,g: N \rightarrow R^+$. Say that $f(n) = O(g(n))$
+if positive integers c and $n_0$ exists= such that for every integer $n \ge n_0$,\\
+    $f(n) \le cg(n)$\\
+When $f(n) = O(g(n))$ we say that $g(n)$ is an upper bound for $f(n)$.
+\item the big-O interacts wit logarithms in a particular way. $log_bn = log_2n /
+log_2b$
+\item Let t(n) be a function, where t(n) $\ge$ n then every t(n) time multitape Turing
+Machine has an equivalent O($t^2$(n)) time single-tape Turing machine.
+\item Let N be a nondeterministic TUring machine that is a decider. The \imp{running
+time} of N is the function $f:N \rightarrow N$, where f(n) is the maximum number of
+steps that N uses on any branch of its computation of any inputof length n, as shown in
+the following figure.
+
+The definition of the running time of a non deterministic TM is not intended to
+correspond to any real-world computing device. Rather,it is a useful math definition.
+
+\item Let t(n) be function, where $t(n) \ge n$. Then every t(n) time nondeterministic
+signle-tape Turing machine has an equivalent $2^{O(t(n))}$ time deterministic single
+tape Turing Machine
+
+\item \imp{the class P} - polynomial.
+\item Exponential is bad, polynomial is good.
+\item \imp{P} is the class of languages that are decidable in polynomial time on a
+deterministic single tape Turing machine. (realistically solvable on a computer).
+    \begin{enumerate}[1., leftmargin = 0.6cm]
+    \itemsep0em
+    \item Every context-free language is a member of P.
+    \item \imp{Dynamic programming} - break a problem to smaller subproblems, and solve
+    each subproblem only once.
+    \item PATH problem is in P
+    \end{enumerate}
+\item \imp{the class NP} - nondeterministically polynomial, i.e. have P time verifier.
+    \begin{enumerate}[1., leftmargin = 0.6cm]
+    \itemsep0em
+    \item HAMILTONIAN PATH problem is in NP, exponential decider, but Polynomial
+    \item Composites ( natural number is composite if it is the product of two integers
+    greater than 1, i.e. composite is not a prime number). Can be easily verified with
+    given divider.
+    \item $\overline{HAMPATH}$ is not in NP
+    \end{enumerate}
+\item \imp{Verifier} for a language A is an algorithm V, where
+
+\begin{centering}
+    $A = \{ w\ |\ V\ accepts \langlew,c\ranlge\ for\ some\ string\ c\}$\\
+\end{centering}
+
+We measure the time of a verifier only in terms of the length of $w$, so a
+ponynomial time verifier runs in polynomial time in the length of $w$. A language A
+is \imp{polynomially verifiable} if it has a polynomial time verifier.
+\item Theorem 7.20. A language is in NP iff it is deced by some nondeterministic
+polynomial time Turing machine.
+    \begin{enumerate}[1., leftmargin = 0.6cm]
+    \itemsep0em
+    \item Forward convert P time verifier to an equivalent NTM.
+    \item Back    convert NTP to P time verifier.
+    \end{enumerate}
+\item Nondeterministic time complexity class $NTIME(t(n))$
+    \begin{enumerate}[1., leftmargin = 0.6cm]
+    \itemsep0em
+    \item $NTIME(t(n)) = \curl{L\ |\ L\ is\ a\ language\ decided\ by\ an\ O(t(n))\
+    time\ nondeterministic\ TM}$
+    \end{enumerate}
+\item $NP = \bigcup_k NTIME(n^k)$
+    \begin{enumerate}[1., leftmargin = 0.6cm]
+    \itemsep0em
+    \item NP problems
+    \item The QLIQUE problem
+    \item The SUBSET problem
+
+    \item Proof: provide polynomial time verifier or NTM (nondeterministic turing
+    machine).
+
+    \end{enumerate}
+\item \imp{P versus NP}
+    \begin{enumerate}[1., leftmargin = 0.6cm]
+    \itemsep0em
+    \item P can be decided quickly.
+    \item NP can be verified quickly.
+    \item P = NP ? nobody can prove or disprove.
+    \item The best deterministic method currently known for deciding languages in NP
+    uses exponential time. In other words, we can prove that.\\
+        $ NP \subseteq EXPTIME = \bigcup_kTIME(2^{n^k})$
+    \end{enumerate}
+\item \imp{NP-COMPLETENESS}
+    \begin{enumerate}[1., leftmargin = 0.6cm]
+    \itemsep0em
+    \item If a plynomial time algorithm exists for any of these problems, all problems
+    in NP would be polynomial time solvable.
+    \item \imp{Satisfiability problem} a boolean formula is satisfiable if some
+    assignment of 0s and 1s to the variables makes the formula evaluate to 1.
+    \item \imp{POLYNOMIAL TIME REDUCIBILITY}
+        \begin{enumerate}[1., leftmargin = 0.6cm]
+        \itemsep0em
+        \item If $A \le_p B$ and $B\in P$ then $A \in P$
+        \end{enumerate}
+    \end{enumerate}
+    \item A language B is NP-complete if it satisfies two conditions:
+
+        1. B is NP, and
+
+        2. every A in NP is polynomial time reducible to B.if it satisfies two
+        conditions:
+
+            1. B is NP, and
+
+            2. every A in NP is polynomial time reducible to B.
+    \item if B is NP complete and $B \in P$, then P = NP.
+    \item if B is NP complete and $B \le_p C$, then C is NP complete.
+    \item \imp{THE COOK-LEVIN THEOREM} the SAT is NP-complete
+    \item Other NP complete problems:
+        \begin{enumerate}[1., leftmargin = 0.6cm]
+        \itemsep0em
+        \item CLIQUE
+        \item VERTEX-COVER
+        \item HAMPATH
+        \item UHAMPATH (undirected)
+        \item SUBSET SUM PROBLEM
+
+        \end{enumerate}
+
+\item \imp{SPACE COMPLEXITY}
+\end{enumerate}
+\end{document}
